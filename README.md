@@ -32,7 +32,7 @@ project-root/
 ├── LICENSE                            ← project license
 └── CITATION.cff                       ← citation metadata
 
-````
+```
 
 ---
 
