@@ -1,4 +1,3 @@
-```markdown
 # OpenForest4D LiDAR Processing Pipeline
 
 This repository contains automated workflows for retrieving, processing, and analyzing multi‑temporal LiDAR data to detect forest structural change. The pipeline supports:
