@@ -1,4 +1,3 @@
-````markdown
 ## Data Retrieval
 
 The following sections describe the complete workflow for obtaining raw LiDAR data from both the OpenTopography AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and subdividing it into manageable tiles. Each step includes the rationale behind the chosen tools and parameters, ensuring clarity for replication and adaptation.
@@ -9,33 +8,22 @@ The following sections describe the complete workflow for obtaining raw LiDAR da
 
 When region‑of‑interest retrieval via the Entwine Point Tile (EPT) protocol is required, the `notebooks/intersection_data_retriever.ipynb` notebook automates all steps. Follow this workflow:
 
-````markdown
 1. **Boundary Loading**  
    Read the USGS 3DEP boundary definitions (EPSG:4326) from:  
    ```text
    data/usgs_3dep_boundaries.geojson
-````
 
 This file is included in this repository under `data/usgs_3dep_boundaries.geojson`.
 To retrieve the most up‑to‑date version, see:
 [https://github.com/OpenTopography/Data\_Catalog\_Spatial\_Boundaries/blob/main/usgs\_3dep\_boundaries.geojson](https://github.com/OpenTopography/Data_Catalog_Spatial_Boundaries/blob/main/usgs_3dep_boundaries.geojson)
 
 
-````markdown
 2. **Intersection Computation**  
    The notebook reads the two named collections (for example,  
    `"CA PlacerCo 2012"` and `"USGS LPC CA NoCAL Wildfires B5a 2018"`) and clips them to their overlapping footprint.  
    The resulting polygon is written automatically to:  
    ```text
    data/placer_intersection.geojson
-````
-
-Downstream steps then operate only on this common area.
-
-```
-
-This way it’s clear that you don’t need to perform any manual clipping—the notebook handles it and drops its output in that file.
-```
 
 
 3. **Tile Grid Generation**  

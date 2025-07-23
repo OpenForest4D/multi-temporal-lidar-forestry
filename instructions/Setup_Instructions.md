@@ -1,4 +1,3 @@
-````markdown
 # Setup Instructions
 
 These instructions are a guide for installing all necessary software, creating environments, and running the provided Jupyter and R scripts. Each step includes rationale, example commands, and links to official resources.
