@@ -1,14 +1,14 @@
-# OpenForest4D LiDAR Processing Pipeline
+# OpenForest4D Lidar Processing Pipeline
 
-This repository contains automated workflows for retrieving, processing, and analyzing multi‑temporal LiDAR data to detect forest structural change. The pipeline supports:
+This repository contains workflows for retrieving, processing, and analyzing multi‑temporal lidar data to detect structural changes to forests. The pipeline supports:
 
-- **Data retrieval** from USGS EPT or OpenTopography S3  
-- **Reprojection** and **tiling** of raw point clouds  
-- **Extraction** of forest metrics (e.g., canopy height, rumple index)  
-- **Differencing** of canopy height models (CHMs) over time  
-- **Visualization** of change products via QGIS  
+- **Data retrieval** from USGS EPT and OpenTopography S3  
+- **Reprojection** and **tiling** of point clouds  
+- **Extraction** of raster-based forest metrics (e.g., canopy height model, rumple index)  
+- **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
+- **Visualization** of topographic hillshades and change products via QGIS  
 
-By standardizing each step in Jupyter notebooks and scripts, the project ensures reproducibility, scalability, and ease of adaptation for new areas or time periods. This work underpins the NSF‑funded OpenForest4D initiative, enabling researchers to quantify post‑disturbance recovery and long‑term forest dynamics.
+By standardizing each step in Jupyter notebooks and R scripts, the project ensures reproducibility, scalability, and ease of adaptation for new areas or time periods. This work is supported by the NSF‑funded OpenForest4D project.
 
 ---
 
