@@ -1,18 +1,11 @@
 # Setup Instructions
 
-These instructions are a guide for installing all necessary software, creating environments, and running the provided Jupyter and R scripts. Each step includes rationale, example commands, and links to official resources.
+These instructions are a guide for installing all necessary software, creating environments, and running the provided Jupyter and R scripts. 
+
 
 ---
 
-## 1. System Prerequisites
-
-1. Internet connection  
-2. Administrative or sudo privileges (for software installation)  
-3. Minimum 8 GB RAM (12 GB or more recommended for large LiDAR datasets)  
-
----
-
-## 2. Installing Python and Conda
+## 1. Installing Python and Conda
 
 Python 3.8 or higher is required. The Conda package manager provides isolated environments and consistent dependency resolution.
 
@@ -36,9 +29,10 @@ Python 3.8 or higher is required. The Conda package manager provides isolated 
 4. **Verify installation**  
    ```bash
    conda --version
+   ```
 
 
-## 3. Cloning the Repository and Environment File
+## 2. Cloning the Repository and Environment File
 
 The repository contains an `environment.yml` manifest listing all Python and R dependencies.
 
@@ -46,7 +40,7 @@ The repository contains an `environment.yml` manifest listing all Python and R d
    ```bash
    git clone https://github.com/YourUser/YourRepo.git
    cd YourRepo
-````
+  ```
 
 2. Inspect `environment.yml` to review listed packages.
 

@@ -1,6 +1,6 @@
 ## Data Retrieval
 
-The following sections describe the complete workflow for obtaining raw LiDAR data from both the OpenTopography AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and subdividing it into manageable tiles. Each step includes the rationale behind the chosen tools and parameters, ensuring clarity for replication and adaptation.
+The following sections describe the complete workflow for obtaining raw LiDAR data from both the OpenTopography AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and dividing it into manageable tiles. 
 
 ---
 
@@ -29,7 +29,7 @@ To retrieve the most up‑to‑date version, see:
 3. **Tile Grid Generation**  
    The notebook takes the clipped intersection polygon and automatically:  
    - Reprojects it to the configured UTM zone (e.g., EPSG:32610).  
-   - Snaps it to a 1 000 m grid and applies a 20 m buffer.  
+   - Snaps it to a 1000 m grid and applies a 20 m buffer.  
    - Writes the resulting grid of buffered tiles to:  
      ```text
      data/placer_tile_grid.geojson
@@ -37,15 +37,14 @@ To retrieve the most up‑to‑date version, see:
    Buffering ensures seamless coverage when tiles are processed independently.
 
 4. **EPT Download**  
-   Using the tile grid in `data/placer_tile_grid.geojson`, the notebook loops over each tile and:  
+   Using the tile grid in `placer_tile_grid.geojson`, the notebook loops over each tile and:  
    - Invokes PDAL’s EPT reader to fetch points within the buffered polygon.  
    - Reprojects points to the target CRS.  
-   - Skips empty tiles.  
    - Saves each nonempty tile as a `.laz` file under:  
      ```text
      data/Placer_2012_Tiled/
      ```  
-   An identical folder (`data/Placer_2018_Tiled/`) is created for the second collection.  
+   An identical folder (`Placer_2018_Tiled`) is created for the second collection.  
 
 
 #### Example parameters
@@ -77,7 +76,7 @@ target_epsg          = "EPSG:32610"
   Exact `name` fields of the two collections to intersect. These must match entries in the boundaries GeoJSON.
 
 * `intersection_geojson`
-  Output path for the clipped intersection polygon. Downstream steps use this to limit the area of interest.
+  Output path for the clipped intersection polygon. The next steps use this to limit the area of interest.
 
 * `tile_grid_geojson`
   Output path for the buffered, regular‑grid GeoJSON defining each tile’s footprint.
@@ -103,7 +102,7 @@ After editing, run the notebook sections in the same order as the cells:
 3. **Tile Grid Generation**
 4. **EPT Download**
 
-When complete, verify that `data/Placer_2012_Tiled/` (and `data/Placer_2018_Tiled/`) contain `.laz` files named by their lower‑left coordinates (for example, `500000_4200000.laz`).
+When complete, verify that `Placer_2012_Tiled/` (and `Placer_2018_Tiled/`) contain `.laz` files named by their lower‑left coordinates (for example, `500000_4200000.laz`).
 
 
 ---
@@ -117,7 +116,7 @@ OpenTopography hosts LiDAR collections in Amazon S3 buckets. The steps below s
 1. **Find the bucket address**
 
    * On the OpenTopography website, open the Tahoe National Forest 2013 LiDAR dataset page.
-   * In the “Data Access” or “Download Options” section, copy the S3 URI. It looks like:
+   * In the "Data Access" or "Download Options" section, copy the S3 URI. It looks like:
 
      ```text
      s3://pc-bulk/CA13_Guo/
@@ -207,7 +206,7 @@ Refer to a UTM zone map to confirm the correct zone for each dataset.
 
 ### 3. Tiling with LASTile
 
-Break large LAZ files into 1 000 m × 1 000 m tiles with a 10 m buffer for edge continuity:
+Break large LAZ files into 1000 m × 1000 m tiles with a 10 m buffer for edge continuity:
 
 ```bash
 lastile \

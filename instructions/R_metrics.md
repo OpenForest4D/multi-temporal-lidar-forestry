@@ -180,7 +180,7 @@ Most LiDAR point clouds from USGS 3DEP and other sources are referenced to an **
     -of GTX geoid_18_CONUS.tif geoid_18_CONUS_save32612.gtx
   ```
 
-**Note:** Even though this step is optional, we *highly recommend* it for vertical alignment across datasets and accurate CHM calculation.
+**Note:** Even though this step is optional, it is *highly recommended* for vertical alignment across datasets and accurate CHM calculation.
 
 
 ## Sample Outputs
