@@ -137,7 +137,7 @@ This section presents a set of raster visualizations exported from QGIS to inter
 
 ![Figure 1](figures/chm_hillshade_2018.png)
 
-*Hillshade of the CHM raster generated from normalized LiDAR point cloud returns. Brighter areas represent taller vegetation. This output was created using the `rasterize_canopy()` function with `dsmtin()` algorithm, followed by `terra::shade()`.*
+*Hillshade of the CHM raster generated from normalized Lidar point cloud returns. Brighter areas represent taller vegetation. This output was created using the `rasterize_canopy()` function with `dsmtin()` algorithm, followed by `terra::shade()`.*
 
 ---
 
@@ -145,7 +145,7 @@ This section presents a set of raster visualizations exported from QGIS to inter
 
 ![Figure 2](figures/dsm_hillshade_2018.png)
 
-*Surface elevation hillshade derived from the topmost LiDAR returns. Includes canopy tops and infrastructure. Generated using `rasterize_canopy()` on unnormalized data.*
+*Surface elevation hillshade derived from the topmost Lidar returns. Includes canopy tops and infrastructure. Generated using `rasterize_canopy()` on unnormalized data.*
 
 ---
 
@@ -169,7 +169,7 @@ This section presents a set of raster visualizations exported from QGIS to inter
 
 ![Figure 5](figures/density_above_2m_hillshade_2018.png)
 
-*Proportion of LiDAR returns greater than 2 meters height. Highlights spatial variability in mid-to-upper canopy density. Computed using `sum(Z > 2) / length(Z)`.*
+*Proportion of Lidar returns greater than 2 meters height. Highlights spatial variability in mid-to-upper canopy density. Computed using `sum(Z > 2) / length(Z)`.*
 
 ---
 
@@ -223,7 +223,7 @@ To cite this work, use the provided [CITATION.cff](CITATION.cff) or:
 
 ```bibtex
 @software{OpenForest4D,
-  title = {OpenForest4D LiDAR Processing Pipeline},
+  title = {OpenForest4D Lidar Processing Pipeline},
   author = {Your Name and collaborators},
   year = {2025},
   url = {https://github.com/YourUser/OpenForest4D}

@@ -2,13 +2,13 @@
 
 ## Overview
 
-This script processes tiled LiDAR point clouds to generate high-resolution raster products essential for forest structure monitoring and ecosystem change analysis. It is part of the **OpenForest4D** pipeline, which supports repeatable forest metrics generation across timepoints. The script is built with `lidR`, `terra`, `sf`, and `future`, and is highly customizable and parallelized.
+This script processes tiled Lidar point clouds to generate high-resolution raster products essential for forest structure monitoring and ecosystem change analysis. It is part of the **OpenForest4D** pipeline, which supports repeatable forest metrics generation across timepoints. The script is built with `lidR`, `terra`, `sf`, and `future`, and is highly customizable and parallelized.
 
 ---
 
 ## What Metrics Are Generated and Why
 
-Each of the following geospatial products is derived from airborne LiDAR and provides a different structural insight:
+Each of the following geospatial products is derived from airborne Lidar and provides a different structural insight:
 
 ### 1. **Digital Surface Model (DSM)**
 
@@ -32,7 +32,7 @@ Canopy cover quantifies the proportion of first returns above a certain height (
 
 ### 6. **Density >2m**
 
-This metric estimates the proportion of all LiDAR points in a cell that fall above 2 meters. It highlights the vertical distribution of vegetation and is often used in habitat modeling.
+This metric estimates the proportion of all Lidar points in a cell that fall above 2 meters. It highlights the vertical distribution of vegetation and is often used in habitat modeling.
 
 ### 7. **Hillshade (optional)**
 
@@ -42,13 +42,13 @@ A shaded relief visualization based on slope and aspect derived from the raster 
 
 ## Code Explanation
 
-This R script defines a function `process_chm_pipeline()` that automates the extraction of the above metrics for all tiles in a given LiDAR folder. Below is a breakdown of how it works.
+This R script defines a function `process_chm_pipeline()` that automates the extraction of the above metrics for all tiles in a given Lidar folder. Below is a breakdown of how it works.
 
 ### 1. **Parallel Setup and Folder Initialization**
 
 The script uses the `future` package to run tiles in parallel (multisession plan). It creates separate output folders for each metric (DTM, DSM, CHM, etc.) under the specified `output_dir`.
 
-### 2. **LiDAR Catalog Configuration**
+### 2. **Lidar Catalog Configuration**
 
 A LAScatalog object is created from the `base_dir`. Tiling and buffer settings are configured for efficient chunk-wise processing with minimal edge artifacts.
 
@@ -98,7 +98,7 @@ Each metric is saved with year-specific filenames and stored in separate folders
 
 ### 1. **Prepare The Inputs**
 
-* Ensure that the LiDAR data is tiled and normalized if needed.
+* Ensure that the Lidar data is tiled and normalized if needed.
 * Place tiles in `base_dir`.
 * Ensure that there is a geoid file if vertical corrections are needed (in `.gtx` or `.tif`).
 
@@ -106,7 +106,7 @@ Each metric is saved with year-specific filenames and stored in separate folders
 
 ```r
 process_chm_pipeline(
-  base_dir = "/path/to/tiled/lidar",
+  base_dir = "/path/to/tiled/Lidar",
   output_dir = "/path/to/save/metrics",
   year = 2020,
   generate_dtm = TRUE,
@@ -124,11 +124,11 @@ process_chm_pipeline(
 )
 ```
 
-* **`base_dir`**: This is the directory containing the pre-tiled LiDAR data in `.las` or `.laz` format. The pipeline will read all tiles from this folder and process them in parallel. The tiling is assumed to be consistent in size and coordinate system, ensuring smooth edge handling when metrics are computed.
+* **`base_dir`**: This is the directory containing the pre-tiled Lidar data in `.las` or `.laz` format. The pipeline will read all tiles from this folder and process them in parallel. The tiling is assumed to be consistent in size and coordinate system, ensuring smooth edge handling when metrics are computed.
 
 * **`output_dir`**: This is where all raster outputs will be saved. The function creates subfolders inside this path for each type of derived product (e.g., DTM, CHM, Rumple). Having a centralized output location helps organize results and makes downstream analysis (e.g., differencing or mosaicking) easier.
 
-* **`year`**: This numeric tag is added to every output raster file’s name (e.g., `tile_2020_dtm.tif`). It helps identify which year the raster corresponds to-especially useful when processing multi-temporal LiDAR datasets for change detection.
+* **`year`**: This numeric tag is added to every output raster file’s name (e.g., `tile_2020_dtm.tif`). It helps identify which year the raster corresponds to-especially useful when processing multi-temporal Lidar datasets for change detection.
 
 * **`generate_dtm`, `generate_dsm`, and `generate_chm`**: These Boolean flags control whether to compute the Digital Terrain Model, Digital Surface Model, and normalized Canopy Height Model. Enabling them allows the function to extract foundational 3D structure metrics from the raw point clouds.
 
@@ -140,7 +140,7 @@ process_chm_pipeline(
 
 * **`compute_rumple`, `compute_canopy_cover`, and `compute_density_2m`**: These flags determine whether to compute the structural metrics derived from the CHM or point cloud. Rumple Index quantifies surface roughness, Canopy Cover measures the proportion of first returns above a certain height, and Density >2m calculates the fraction of returns above 2 meters. These metrics are especially useful in forestry, ecology, and disturbance studies.
 
-* **`metric_res`**: This sets the resolution (in meters) for the derived metrics like Rumple, Canopy Cover, and Density >2m. A typical value is 10, which means each output cell represents a 10×10 meter grid area. Adjust this depending on the study area size and LiDAR point density.
+* **`metric_res`**: This sets the resolution (in meters) for the derived metrics like Rumple, Canopy Cover, and Density >2m. A typical value is 10, which means each output cell represents a 10×10 meter grid area. Adjust this depending on the study area size and Lidar point density.
 
 * **`size` and `buffer`**: `size` defines the tile dimension (e.g., 1000 meters square), and `buffer` adds a margin around each tile (e.g., 20 meters) to prevent edge effects during interpolation and smoothing. Buffers ensure smoother transitions between neighboring tiles and avoid artifacts at tile boundaries.
 
@@ -151,7 +151,7 @@ This function can be called multiple times to process different years or regions
 
 ### **Geoid Correction File** (`.gtx` format) – *optional but recommended*
 
-Most LiDAR point clouds from USGS 3DEP and other sources are referenced to an **ellipsoidal vertical datum**—typically the WGS84 ellipsoid or NAD83. However, real-world elevation (what we perceive as “height above sea level”) is defined relative to a **geoid**, which approximates mean sea level and accounts for Earth's gravitational irregularities.
+Most Lidar point clouds from USGS 3DEP and other sources are referenced to an **ellipsoidal vertical datum**—typically the WGS84 ellipsoid or NAD83. However, real-world elevation (what we perceive as “height above sea level”) is defined relative to a **geoid**, which approximates mean sea level and accounts for Earth's gravitational irregularities.
 
 #### Why this matters:
 
@@ -159,7 +159,7 @@ Most LiDAR point clouds from USGS 3DEP and other sources are referenced to an **
   Without correction, your Digital Surface Models (DSM), Digital Terrain Models (DTM), and derived CHM will be **offset vertically**, often by **20 to 50 meters** depending on location.
 
 * **Consistency across years**
-  Applying geoid correction ensures that metrics like CHM are directly comparable across time points and regions—even if the original LiDAR datasets used different vertical datums.
+  Applying geoid correction ensures that metrics like CHM are directly comparable across time points and regions—even if the original Lidar datasets used different vertical datums.
 
 * **Required for scientific accuracy**
   When conducting ecological analysis, carbon stock estimation, or forest structure change detection, **absolute elevation matters**. Vertical bias can distort CHM values and affect downstream statistics.
@@ -245,5 +245,5 @@ In QGIS, you can:
 
 ---
 
-These next steps enable full **scientific interpretation**, **monitoring**, and **communication** of changes in forest canopy structure using LiDAR-derived data.
+These next steps enable full **scientific interpretation**, **monitoring**, and **communication** of changes in forest canopy structure using Lidar-derived data.
 

@@ -1,6 +1,6 @@
 ## Data Retrieval
 
-The following sections describe the complete workflow for obtaining raw LiDAR data from both the OpenTopography AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and dividing it into manageable tiles. 
+The following sections describe the complete workflow for obtaining raw Lidar data from both the OpenTopography AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and dividing it into manageable tiles. 
 
 ---
 
@@ -109,13 +109,13 @@ When complete, verify that `Placer_2012_Tiled/` (and `Placer_2018_Tiled/`) conta
 
 ## Option 2: AWS S3 (OpenTopography)
 
-OpenTopography hosts LiDAR collections in Amazon S3 buckets. The steps below show how to find the correct bucket address, verify its contents, and download all files to a local folder.
+OpenTopography hosts Lidar collections in Amazon S3 buckets. The steps below show how to find the correct bucket address, verify its contents, and download all files to a local folder.
 
 #### Tahoe National Forest 2013
 
 1. **Find the bucket address**
 
-   * On the OpenTopography website, open the Tahoe National Forest 2013 LiDAR dataset page.
+   * On the OpenTopography website, open the Tahoe National Forest 2013 Lidar dataset page.
    * In the "Data Access" or "Download Options" section, copy the S3 URI. It looks like:
 
      ```text
