@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------------
-# LiDAR Metric Extraction Pipeline for OpenForest4D
-# Project: OpenForest4D – NSF-funded research on multi-temporal LiDAR forest analysis
+# Lidar Metric Extraction Pipeline for OpenForest4D
+# Project: OpenForest4D – NSF-funded research on multi-temporal Lidar forest analysis
 # 
 # Description:
-# This R script defines and runs `process_chm_pipeline()`, an end-to-end automated
-# function for processing pre-tiled LiDAR point cloud datasets to generate:
+# This R script defines and runs 'process_chm_pipeline()', an end-to-end automated
+# function for processing pre-tiled Lidar point cloud datasets to generate:
 #   - Digital Surface Models (DSM)
 #   - Digital Terrain Models (DTM)
 #   - Canopy Height Models (CHM)
@@ -13,24 +13,24 @@
 # Each tile is processed in parallel using 'catalog_apply()' from the 'lidR' package.
 #
 # Required Input:
-#   1. **Tiled LiDAR catalog folder** (e.g., 1 km² tiles with overlap).
-#   2. **Geoid correction file** (.gtx format) – optional but recommended.
+#   1. Tiled Lidar catalog folder (e.g., 1 km² tiles with overlap).
+#   2. Geoid correction file (.gtx format) – optional but recommended.
 #   3. Appropriate output directories with write access.
 #
 # Output:
-#   Raster TIFFs for each metric saved in subfolders under the specified `output_dir`.
-#   Each raster is named by tile ID and year (e.g., `tile_2018_dtm.tif`).
+#   Raster TIFFs for each metric saved in subfolders under the specified 'output_dir'.
+#   Each raster is named by tile ID and year (e.g., 'tile_2018_dtm.tif').
 #
 # How to Use:
-#   - Adjust the `base_dir` to your input tile folder.
-#   - Set the `output_dir` to your desired output location.
+#   - Adjust the 'base_dir' to your input tile folder.
+#   - Set the 'output_dir' to your desired output location.
 #   - Provide a geoid file path if orthometric correction is needed.
 #   - Set all required boolean flags for the metrics you want to compute.
-#   - Optionally modify `metric_res`, `size`, and `buffer` for grid resolution and tiling.
-#   - Run the `process_chm_pipeline()` function for each dataset/year.
+#   - Optionally modify 'metric_res', 'size', and 'buffer' for grid resolution and tiling.
+#   - Run the 'process_chm_pipeline()' function for each dataset/year.
 #
 # Dependencies:
-#   - Required R libraries: `lidR`, `terra`, `sf`, `future`, `geometry`
+#   - Required R libraries: 'lidR', 'terra', 'sf', 'future', 'geometry'
 #   - You can install any missing libraries using:
 #       install.packages("lidR")
 #       install.packages("terra")
@@ -39,11 +39,11 @@
 #       install.packages("geometry")
 #
 # Note:
-#   - If your geoid file is in `.tif` format, convert it to `.gtx` using:
+#   - If your geoid file is in '.tif' format, convert it to '.gtx' using:
 #       gdalwarp -overwrite -s_srs EPSG:4326 -t_srs EPSG:32612 -r bilinear \
 #         -of GTX geoid_18_CONUS.tif geoid_18_CONUS_save32612.gtx
-#   - Ensure all paths use forward slashes or double backslashes (`\\`) on Windows.
-#   - This script assumes LiDAR tiles are preprocessed, cleaned, and quality-checked.
+#   - Ensure all paths use forward slashes or double backslashes ('\\') on Windows.
+#   - This script assumes Lidar tiles are preprocessed, cleaned, and quality-checked.
 #
 # Documentation:
 #   - For step-by-step usage instructions and project rationale, see the R_metrics.md file.
@@ -81,29 +81,29 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
   #
   # This section initializes the required folders for storing output rasters.
   # Each metric type (DTM, DSM, CHM, Rumple, Canopy Cover, Density >2m) gets
-  # its own subdirectory within the provided `output_dir`, organized for clarity
+  # its own subdirectory within the provided 'output_dir', organized for clarity
   # and modularity.
   #
-  # `readLAScatalog(base_dir)` loads the entire set of tiled LAS/LAZ files into
+  # 'readLAScatalog(base_dir)' loads the entire set of tiled LAS/LAZ files into
   # a LAScatalog object, which enables efficient chunk-wise processing using
-  # `catalog_apply()`.
+  # 'catalog_apply()'.
   #
   # The chunk size and buffer are set based on user-provided parameters.
   # These values determine how the input tiles are divided for parallel processing.
   #
-  # - `opt_chunk_size(ctg)`: Defines the size (in meters) of each processing block.
-  # - `opt_chunk_buffer(ctg)`: Adds an overlap (buffer) between chunks to reduce edge artifacts.
-  # - `opt_independent_files(ctg)`: Ensures each tile is processed separately, avoiding cross-chunk dependencies.
-  # - `opt_output_files(ctg)`: Left empty to avoid automatic writing; output is manually handled.
+  # - 'opt_chunk_size(ctg)': Defines the size (in meters) of each processing block.
+  # - 'opt_chunk_buffer(ctg)': Adds an overlap (buffer) between chunks to reduce edge artifacts.
+  # - 'opt_independent_files(ctg)': Ensures each tile is processed separately, avoiding cross-chunk dependencies.
+  # - 'opt_output_files(ctg)': Left empty to avoid automatic writing; output is manually handled.
   #
   # ------------------------------------------------------------------------------
   
   dirs <- list(
-    DTM_tiles = file.path(output_dir, "DTM_tiles"),
-    DSM_tiles = file.path(output_dir, "DSM_tiles"),
-    CHM_normalized_tiles = file.path(output_dir, "CHM_normalized_tiles"),
-    Rumple_tiles = file.path(output_dir, "Rumple_tiles"),
-    CanopyCover_tiles = file.path(output_dir, "Canopy_Cover_tiles"),
+    DTM_tiles = file.path(output_dir, "DTM_Tiles"),
+    DSM_tiles = file.path(output_dir, "DSM_Tiles"),
+    CHM_normalized_tiles = file.path(output_dir, "CHM_Tiles"),
+    Rumple_tiles = file.path(output_dir, "Rumple_Tiles"),
+    CanopyCover_tiles = file.path(output_dir, "Canopy_Cover_Tiles"),
     Density_Tiles = file.path(output_dir, "Density_Tiles")
   )
   lapply(dirs, dir.create, showWarnings = FALSE, recursive = TRUE)
@@ -119,8 +119,8 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
   # Apply CHM Processing Pipeline to Each Tile in the Catalog
   #
   # This section defines and applies a custom processing function to each tile
-  # (or "cluster") in the LAScatalog using `catalog_apply()`. The function extracts
-  # relevant LiDAR metrics such as DSM, DTM, CHM, Rumple Index, Canopy Cover,
+  # (or "cluster") in the LAScatalog using 'catalog_apply()'. The function extracts
+  # relevant Lidar metrics such as DSM, DTM, CHM, Rumple Index, Canopy Cover,
   # and Density >2m, and optionally applies hillshade rendering.
   #
   # ------------------------------------------------------------------------------
@@ -133,11 +133,11 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
              compute_rumple, compute_canopy_cover, compute_density_2m,
              metric_res, year, geoid_path, dirs) {
       
-      #Required libraries (`terra`, `lidR`) are loaded explicitly to ensure availability in each worker session.
+      #Required libraries ('terra', 'lidR') are loaded explicitly to ensure availability in each worker session.
       library(terra) 
       library(lidR)
       
-      #`toSpat()` is a helper function to convert `grid_metrics` output into a`SpatRaster` object for consistency with Terra I/O.
+      #'toSpat()' is a helper function to convert 'grid_metrics' output into a'SpatRaster' object for consistency with Terra I/O.
       toSpat <- function(x) rast(x)
       
       # This helper function generates a hillshade raster from an input elevation raster
@@ -155,7 +155,7 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
         writeRaster(hs, out_path, overwrite = TRUE)
       }
       
-      # Attempt to load the LAS point cloud data for this tile using `readLAS()`.
+      # Attempt to load the LAS point cloud data for this tile using 'readLAS()'.
       # We wrap it in a tryCatch block to safely handle errors (e.g., corrupted or missing files).
       # If loading fails or the LAS file is empty, we return NULL to skip this tile gracefully.
       las <- tryCatch({
@@ -185,14 +185,14 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # ----------- DSM -----------
       # Generate the Digital Surface Model (DSM) for the current tile.
       # The DSM represents the elevation of the uppermost surfaces, including vegetation and structures,
-      # and is derived from the LiDAR point cloud using `rasterize_canopy()` with the TIN algorithm.
+      # and is derived from the Lidar point cloud using 'rasterize_canopy()' with the TIN algorithm.
       # The process is wrapped in a tryCatch block to catch any tile-specific errors.
       # 
       # After creation, the DSM is optionally corrected for geoid undulation by resampling and adding
       # a provided geoid raster. This step helps convert from ellipsoidal to orthometric heights.
       # 
       # The resulting DSM is saved to disk unless it already exists and overwriting is disabled.
-      # If `generate_hillshade` is enabled, a hillshade raster is also produced for visualization.
+      # If 'generate_hillshade' is enabled, a hillshade raster is also produced for visualization.
       
       dsm <- tryCatch({
         rasterize_canopy(las, res = 1, algorithm = dsmtin(max_edge = 3))
@@ -221,7 +221,7 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # ----------- DTM -----------
       # Generate the Digital Terrain Model (DTM) for the current tile.
       # The DTM models the bare earth surface by excluding vegetation, buildings, and other elevated features.
-      # It is computed using `rasterize_terrain()` with the TIN (Triangulated Irregular Network) algorithm,
+      # It is computed using 'rasterize_terrain()' with the TIN (Triangulated Irregular Network) algorithm,
       # which interpolates ground points to estimate the terrain surface.
       #
       # The computation is enclosed in a tryCatch block to ensure that any failures (e.g., due to poor data quality)
@@ -248,7 +248,7 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # First, heights in the LAS file are normalized using the DTM to reference all elevation values to ground level.
       # If no points remain after normalization (e.g., due to data errors or overly aggressive filtering), the tile is skipped.
       #
-      # The CHM is then computed using `rasterize_canopy()` with the TIN-based surface reconstruction algorithm (`dsmtin()`),
+      # The CHM is then computed using 'rasterize_canopy()' with the TIN-based surface reconstruction algorithm ('dsmtin()'),
       # which interpolates the topmost points (e.g., tree canopy or roof surfaces) to form a continuous surface.
       # If the resulting CHM is invalid or empty, the tile is skipped.
       #
@@ -257,7 +257,7 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # Optionally, a hillshade image is generated to support better visualization of canopy structure.
       
       # Apply geoid correction to the DTM if a geoid file is provided.
-      # The geoid adjustment accounts for the difference between ellipsoidal height (from the LiDAR sensor)
+      # The geoid adjustment accounts for the difference between ellipsoidal height (from the Lidar sensor)
       # and orthometric height (more appropriate for terrain analysis), improving elevation accuracy.
       # The geoid raster is resampled and added to the DTM using bilinear interpolation to match resolutions.
       #
@@ -307,8 +307,8 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # The geoid raster is resampled to match the DTM’s resolution using bilinear interpolation and then added to the DTM.
       # The final geoid-adjusted DTM is masked to match the DSM footprint, ensuring consistent spatial coverage.
       #
-      # If the output doesn't already exist or `overwrite = TRUE`, the DTM is written to disk.
-      # A hillshade image is also generated if the `generate_hillshade` flag is enabled.
+      # If the output doesn't already exist or 'overwrite = TRUE', the DTM is written to disk.
+      # A hillshade image is also generated if the 'generate_hillshade' flag is enabled.
       
       if (!is.null(geoid_path) && file.exists(geoid_path)) {
         geoid <- rast(geoid_path)
@@ -328,16 +328,16 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # ---------- Rumple ----------
       # Compute the Rumple Index, which quantifies surface roughness or structural complexity of the canopy.
       #
-      # This block first checks whether Rumple computation is requested (`compute_rumple == TRUE`) and whether 
+      # This block first checks whether Rumple computation is requested ('compute_rumple == TRUE') and whether 
       # the output file already exists or should be overwritten.
       #
       # - We filter the point cloud to retain only surface points within 0.5 m of the top of the canopy.
       #   These are most relevant for capturing surface structure and eliminating noise from lower vegetation or ground returns.
       #
-      # - If sufficient surface points are present, `grid_metrics()` is used to compute the Rumple Index across tiles 
-      #   at the specified resolution (`metric_res`). This function calculates the 3D surface area to 2D footprint area ratio.
+      # - If sufficient surface points are present, 'grid_metrics()' is used to compute the Rumple Index across tiles 
+      #   at the specified resolution ('metric_res'). This function calculates the 3D surface area to 2D footprint area ratio.
       #
-      # - The result is converted to a `SpatRaster` object using the `toSpat()` helper and saved to disk.
+      # - The result is converted to a 'SpatRaster' object using the 'toSpat()' helper and saved to disk.
       #
       # If no surface points are available in the tile, a warning is issued and no output is written for that tile.
       
@@ -357,16 +357,16 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # ---------- Canopy Cover ----------
       # Compute Canopy Cover, which represents the proportion of ground covered by vegetation above a certain height threshold.
       #
-      # This block runs only if `compute_canopy_cover` is TRUE and the corresponding output file doesn't exist 
+      # This block runs only if 'compute_canopy_cover' is TRUE and the corresponding output file doesn't exist 
       # or needs to be overwritten.
       #
-      # - We filter the normalized point cloud (`las_norm`) to retain only first returns (`ReturnNumber == 1`), 
+      # - We filter the normalized point cloud ('las_norm') to retain only first returns ('ReturnNumber == 1'), 
       #   as these best represent the uppermost surfaces (canopy tops) without being obscured by overstory.
       #
-      # - For each grid cell (at resolution `metric_res`), we calculate the ratio of first returns above 1 meter 
+      # - For each grid cell (at resolution 'metric_res'), we calculate the ratio of first returns above 1 meter 
       #   (i.e., likely vegetation) to the total number of first returns. This gives a fractional measure of canopy cover.
       #
-      # - The result is converted to a `SpatRaster` and saved as a GeoTIFF.
+      # - The result is converted to a 'SpatRaster' and saved as a GeoTIFF.
       #
       # If no valid first returns are found for a tile, a warning is printed and no output is generated.
       
@@ -389,15 +389,15 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # This metric is useful for assessing the vertical structure and vegetation density—particularly for identifying 
       # mid-to-upper canopy biomass. It complements Canopy Cover by focusing on *point density* rather than *surface coverage*.
       #
-      # This block executes only if `compute_density_2m` is TRUE and the corresponding raster doesn't already exist 
+      # This block executes only if 'compute_density_2m' is TRUE and the corresponding raster doesn't already exist 
       # (or needs to be overwritten).
       #
-      # - The input point cloud is the normalized LAS (`las_norm`), where height Z is relative to the ground.
+      # - The input point cloud is the normalized LAS ('las_norm'), where height Z is relative to the ground.
       #
-      # - For each grid cell (based on `metric_res`), we calculate the fraction of points whose normalized height exceeds 2 meters.
+      # - For each grid cell (based on 'metric_res'), we calculate the fraction of points whose normalized height exceeds 2 meters.
       #   This helps isolate true canopy elements from understory or ground clutter.
       #
-      # - The output is written as a `SpatRaster` GeoTIFF.
+      # - The output is written as a 'SpatRaster' GeoTIFF.
       #
       # If no valid points are found in the tile, the metric is skipped with a warning.
       
@@ -436,20 +436,20 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
 # ---------------------------------------------------------------------------
 # Run the CHM processing pipeline for two different years: 2012 and 2018.
 #
-# This block invokes the full `process_chm_pipeline()` function twice—once per year—
-# to extract LiDAR-derived structural metrics from two timepoints. These metrics
+# This block invokes the full 'process_chm_pipeline()' function twice—once per year—
+# to extract Lidar-derived structural metrics from two timepoints. These metrics
 # will later be used to assess forest change over time.
 #
 # For each year:
-# - `base_dir` points to the folder containing tiled LAS/LAZ data.
-# - `output_dir` is where the derived rasters (DSM, DTM, CHM, etc.) will be saved.
-# - `year` tag ensures filenames include the correct timepoint.
-# - `generate_*` flags control which outputs are computed.
-# - `overwrite` allows existing outputs to be replaced.
-# - `geoid_path` provides the vertical correction grid for accurate elevation adjustment.
-# - `compute_*` flags enable the optional forest structure metrics (Rumple Index, Canopy Cover, Density >2m).
-# - `metric_res` sets the grid resolution (in meters) for rasterized summary outputs.
-# - `size` and `buffer` configure the LAScatalog chunking behavior for parallel tile-based processing.
+# - 'base_dir' points to the folder containing tiled LAS/LAZ data.
+# - 'output_dir' is where the derived rasters (DSM, DTM, CHM, etc.) will be saved.
+# - 'year' tag ensures filenames include the correct timepoint.
+# - 'generate_*' flags control which outputs are computed.
+# - 'overwrite' allows existing outputs to be replaced.
+# - 'geoid_path' provides the vertical correction grid for accurate elevation adjustment.
+# - 'compute_*' flags enable the optional forest structure metrics (Rumple Index, Canopy Cover, Density >2m).
+# - 'metric_res' sets the grid resolution (in meters) for rasterized summary outputs.
+# - 'size' and 'buffer' configure the LAScatalog chunking behavior for parallel tile-based processing.
 #
 # Running this for both 2012 and 2018 ensures comparable metric rasters that can be
 # differenced later to quantify structural changes in forest canopy over time.

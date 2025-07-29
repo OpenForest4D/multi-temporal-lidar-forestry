@@ -84,7 +84,7 @@ Check `Data_Retrieval_Instructions.md` for a more detailed guide.
 * **Primary method:**
   Run `notebooks/intersection_data_retriever.ipynb` (USGS EPT).
 * **Alternative S3:**
-  Edit and run `Data_Retrieval_Instructions.md` steps for AWS S3.
+  Check `Data_Retrieval_Instructions.md` steps for AWS S3.
 
 ### Option 2: Tiling
 
@@ -93,12 +93,12 @@ If point clouds exist but tiling is needed:
 1. **Script:**
 
    ```bash
-   python scripts/tile_laz.py \
-     --input-dir <path_to_reproj> \
-     --output-dir <path_to_tiles> \
-     --tile-size 1000 \
-     --buffer 20 \
-     --cores 4
+    lastile -i C:\Users\sreeja\Documents\OpenForest4D\Data\*.laz ^
+        -tile_size 1000 ^
+        -buffer 10 ^
+        -odir C:\Users\sreeja\Documents\OpenForest4D\2012_tiled ^
+        -olaz ^
+        -cores 4
    ```
 2. **Notebook fallback:**
    Open `notebooks/tiling.ipynb`, set `input_dir`, `output_dir`, `tile_size`, `buffer`, `cores`, then run the "Tiling LAZ files" cell.
@@ -121,7 +121,7 @@ If point clouds exist but tiling is needed:
 
 ## 4. Results
 
-Here is a complete **Markdown section** you can directly paste into your `README.md`. Replace the image paths with the actual filenames (e.g., `figures/chm_hillshade_2018.png`) once your screenshots are ready.
+
 
 ---
 
