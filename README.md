@@ -10,6 +10,28 @@ This repository contains workflows for retrieving, processing, and analyzing mul
 
 By standardizing each step in Jupyter notebooks and R scripts, the project ensures reproducibility, scalability, and ease of adaptation for new areas or time periods. This work is supported by the NSF‑funded OpenForest4D project.
 
+![Figure 1](figures/AGU.png)
+
+---
+
+### Example Output: Canopy Height Change Analysis on the Kaibab Plateau (2012–2019)
+
+The figure above illustrates forest structure change on the Kaibab Plateau in northern Arizona, derived using the multi-temporal Lidar processing pipeline. Airborne Lidar data from 2012 and 2019 were processed using this  pipeline.
+
+* **Main Map (left):** Displays CHM height change between 2012 and 2019.
+
+  * **Red areas** indicate loss in canopy height.
+  * **Blue areas** indicate gain in canopy height.
+* **Insets (right):**
+
+  * **Top:** CHM from 2012.
+  * **Middle:** CHM from 2019.
+  * **Bottom:** Differenced CHM (2019 − 2012).
+* **Green Polygons:** Represent wildfire perimeters during the analysis period.
+
+This figure demonstrates the output of the full processing pipeline, from raw point cloud tiling and classification to raster generation, spatial alignment, differencing, and final visualization for ecological change analysis.
+
+
 ---
 
 ## 1. Repository Structure
@@ -17,20 +39,29 @@ By standardizing each step in Jupyter notebooks and R scripts, the project ensur
 ```
 
 project-root/
-├── data/                              # static assets
-│   └── usgs\_3dep\_boundaries.geojson   # USGS 3DEP boundary definitions
-├── notebooks/                         # Jupyter workflows
-│   ├── intersection\_data\_retriever.ipynb  # EPT data retrieval & tiling
-│   ├── tiling.ipynb                       # LASTile tiling fallback
-│   ├── differencing\_script.ipynb          # Forest metrics differencing
-│   └── forestry\_metrics.R                 ← R script for canopy metrics
-├── scripts/                           # command‑line helpers
-│   └── tile\_laz.py                    # Python wrapper for LASTile
-├── environment.yml                    ← Conda environment spec
-├── Data\_Retrieval\_Instructions.md     ← detailed data retrieval guide
-├── README.md                          ← this file
-├── LICENSE                            ← project license
-└── CITATION.cff                       ← citation metadata
+data/
+  usgs_3dep_boundaries.geojson
+
+notebooks/
+  intersection_data_retriever.ipynb
+  tiling.ipynb
+  differencing_script.
+  tiling.ipynb
+
+R/
+  forestry_metrics.R
+  classify_ground.R
+
+instructions/
+  Data_Retrieval_Instructions.md
+  R_metrics.md
+  Setup_Instructions.md
+
+environment.yml
+README.md
+LICENSE
+CITATION.cff
+
 
 ```
 
@@ -39,47 +70,11 @@ project-root/
 ## 2. Installation & Setup
 
 Refer to **Setup Instructions** for full details (see below or [Data_Retrieval_Instructions.md]).
-
-1. **Clone repo**  
-   ```bash
-   git clone https://github.com/YourUser/OpenForest4D.git
-   cd OpenForest4D
-   ```
-
-2. **Install Conda**
-
-   * Download Anaconda or Miniconda and follow the prompts.
-   * Open a Conda‑enabled prompt.
-
-3. **Create environment**
-
-   ```bash
-   conda env create -f environment.yml
-   conda activate lidar_env
-   ```
-
-4. **Verify packages**
-
-   ```bash
-   conda list
-   ```
-
-5. **Install RStudio** (for forestry metrics)
-
-   * R 4.0+ from CRAN
-   * RStudio Desktop
-   * In R:
-
-     ```r
-     install.packages(c("terra","future","lidR"))
-     ```
-
 ---
 
 ## 3. Workflow & How to Run
 
 ### Option 1: Data Retrieval (if raw LAZ not already available)
-Check `Data_Retrieval_Instructions.md` for a more detailed guide.
 
 * **Primary method:**
   Run `notebooks/intersection_data_retriever.ipynb` (USGS EPT).
@@ -105,105 +100,88 @@ If point clouds exist but tiling is needed:
 
 ### Step 1: Extract Forest Metrics
 
-* **Why:** Derive canopy height, canopy cover, rumple index, and point density metrics for each tile.
+*  Derive canopy height, canopy cover, rumple index, and point density metrics for each tile.
 * **Script:**
   Open `notebooks/forestry_metrics.R` in RStudio and run end‑to‑end.
 * **Output:** GeoTIFF rasters (e.g., `CHM.tif`, `Rumple.tif`) saved under the same tile folder.
 
 ### Step 2: CHM Differencing
 
-* **Why:** Compute pixel‑wise change between two dates to detect growth or disturbance.
+*  Compute pixel‑wise change between two dates to detect growth or disturbance.
 * **Notebook:**
-  `notebooks/differencing_script.ipynb` loads CHM rasters from two folders, calculates difference, and exports a difference GeoTIFF.
+  `notebooks/differencing_script.ipynb` loads CHM rasters from two folders, calculates difference, and exports  difference GeoTIFFs.
 * **Output:** `CHM_Difference.tif` for each tile.
-
----
-
-## 4. Results
-
 
 
 ---
 
 ## 4. Visual Outputs & Interpretation
 
-This section presents a set of raster visualizations exported from QGIS to interpret forest structural metrics and temporal changes across LiDAR datasets. All outputs are derived from the `process_chm_pipeline()` and `run()` differencing workflows. Hillshades are used for enhanced visual contrast and spatial comprehension.
+This section presents a set of raster visualizations exported from QGIS to interpret forest structural metrics and temporal changes across LiDAR datasets. All outputs are derived from running the scripts in order. Hillshades are used for enhanced visual contrast and spatial comprehension.
 
 ---
 
-### **4.1 Forest Metric Hillshades**
+### **4.1 Forest Metric Visualizations**
 
-#### **Figure 1. Canopy Height Model (CHM) Hillshade — 2018**
+Figure 1, 2, 3, 4, 5 represent the metrics calculated for the Kaibab Plateau of Northern Arizona using Lidar collected in 2019.
 
-![Figure 1](figures/chm_hillshade_2018.png)
+#### **Figure 1. Canopy Height Model (CHM) Hillshade **
 
-*Hillshade of the CHM raster generated from normalized Lidar point cloud returns. Brighter areas represent taller vegetation. This output was created using the `rasterize_canopy()` function with `dsmtin()` algorithm, followed by `terra::shade()`.*
+![Figure 1](figures/chm_hillshade.png)
 
----
-
-#### **Figure 2. Digital Surface Model (DSM) Hillshade — 2018**
-
-![Figure 2](figures/dsm_hillshade_2018.png)
-
-*Surface elevation hillshade derived from the topmost Lidar returns. Includes canopy tops and infrastructure. Generated using `rasterize_canopy()` on unnormalized data.*
+*Hillshade of the CHM raster generated from normalized Lidar point cloud returns. Brighter areas represent taller vegetation.*
 
 ---
 
-#### **Figure 3. Digital Terrain Model (DTM) Hillshade — 2018**
+#### **Figure 2. Digital Surface Model (DSM) Hillshade**
 
-![Figure 3](figures/dtm_hillshade_2018.png)
+![Figure 2](figures/dsm_hillshade.png)
 
-*Terrain-only hillshade, representing bare-earth elevation. Interpolated using the `tin()` method in `rasterize_terrain()`. Used as the base for CHM normalization.*
+*Surface elevation hillshade derived from the topmost Lidar returns.*
 
 ---
 
-#### **Figure 4. Canopy Cover Hillshade — 2018**
+#### **Figure 3. Digital Terrain Model (DTM) Hillshade**
 
-![Figure 4](figures/canopy_cover_hillshade_2018.png)
+![Figure 3](figures/dtm_hillshade.png)
 
-*Grid showing canopy cover percentage from first-return points above 1 meter. Calculated as the ratio of points above 1m to total first returns, using `grid_metrics()`.*
+*Terrain-only hillshade, representing bare-earth elevation. Interpolated using the tin() method. Used as the base for CHM normalization.*
+
+---
+
+#### **Figure 4. Canopy Cover Hillshade **
+
+![Figure 4](figures/canopy_cover.png)
+
+*Image showing canopy cover percentage from first-return points above 1 meter. Calculated as the ratio of points above 1m to total first returns.*
 
 ---
 
 #### **Figure 5. Density >2m Hillshade — 2018**
 
-![Figure 5](figures/density_above_2m_hillshade_2018.png)
+![Figure 5](figures/density.png)
 
-*Proportion of Lidar returns greater than 2 meters height. Highlights spatial variability in mid-to-upper canopy density. Computed using `sum(Z > 2) / length(Z)`.*
-
----
-
-### **4.2 CHM Differencing and VRT Mosaics**
-
-#### **Figure 6. CHM Difference Raster (2012–2018)**
-
-![Figure 6](figures/chm_difference_hillshade_2012_2018.png)
-
-*Pixel-wise difference in canopy height between 2012 and 2018. Positive values (green) represent canopy growth, negative values (red) indicate loss — such as from logging or wildfire. Created using `compute_difference()` and visualized via QGIS hillshade overlay.*
+*Proportion of Lidar returns greater than 2 meters height. Highlights spatial variability in mid-to-upper canopy density.*
 
 ---
 
-#### **Figure 7. VRT Mosaic — CHM Differences (Diff VRT)**
+### **4.2 Differencing and VRT Visualizations**
 
-![Figure 7](figures/chm_diff_vrt.png)
+The below image represents the pixel-wise difference in canopy height between the years 2019 and 2021 of the Mangum fires in the Kaibab Plateau of Northern Arizona. They are made using the differencing_script.ipynb notebook and visualized in QGIS.
 
-*Virtual mosaic built from all CHM difference rasters. Constructed using GDAL's `build_vrt()` in `run()` pipeline to support seamless analysis across tiles.*
+#### **Figure 6. CHM Difference Raster**
 
----
+![Figure 6](figures/chm_diff.png)
 
-#### **Figure 8. VRT Mosaic — CHM Original Tiles (2018)**
+*Positive values (blue) represent canopy growth, negative values (red) indicate loss because if the wildfire.*
 
-![Figure 8](figures/chm_vrt_2018.png)
-
-*Tile-based VRT mosaic of original CHMs for 2018. Enables fast loading and visualization of large CHM datasets in QGIS or other raster tools.*
 
 ---
 
 ### Notes:
 
-* All hillshades were generated with `terra::shade()` using slope and aspect from corresponding rasters.
 * VRT mosaics are saved in the parent folder of each metric group for both original and differenced rasters.
-* These outputs can be further analyzed in QGIS (e.g., for zonal stats, overlays) as the next step.
+* These outputs can be further analyzed in QGIS as the next step.
 
 ---
 
@@ -241,7 +219,3 @@ To cite this work, use the provided [CITATION.cff](CITATION.cff) or:
 * UTM coordinate system overview: [https://epsg.io/32610](https://epsg.io/32610)
 
 ---
-
-## 8. Contribution & Support
-
-Issues and pull requests are welcome. Please see \[CONTRIBUTING.md] for guidelines or open an issue if questions arise.

@@ -204,9 +204,10 @@ Refer to a UTM zone map to confirm the correct zone for each dataset.
 
 ---
 
+
 ### 3. Tiling with LASTile
 
-Break large LAZ files into 1000 m × 1000 m tiles with a 10 m buffer for edge continuity:
+Break large LAZ files into 1000 m × 1000 m tiles with a 10 m buffer for edge continuity:
 
 ```bash
 lastile \
@@ -222,6 +223,19 @@ lastile \
 * `-buffer`: overlap in meters
 * `-cores`: parallel processes
 
+> **Special case – already tiled & buffered LAS files**
+> If the files are already tiled and buffered, it is recommended to merge the tiles and then re-tile them using the scipt or the command.
+> For example, if the tiles are in `.las` format, to merge the file before re-tiling, use `lasmerge`:
+>
+> ```bash
+> lasmerge ^
+>   -i "C:\Users\sreeja\Documents\Kaibab\Mangum\*.las" ^
+>   -o "C:\Users\sreeja\Documents\Kaibab\Merged\Mangum_Merged.laz" ^
+>   -olaz
+> ```
+>
+> After merging, `lastile`can be run again especially if a different grid size or buffer is needed.
+
 #### Notebook fallback
 
 If `lastile` errors in the terminal, open the tiling notebook:
@@ -233,6 +247,7 @@ jupyter lab notebooks/tiling.ipynb
 Edit the top‐cell parameters (`input_dir`, `output_dir`, `tile_size`, `buffer`, `cores`), then run the **Tiling LAZ files** cell to process all files.
 
 ---
+
 
 ### 4. Configuration
 
