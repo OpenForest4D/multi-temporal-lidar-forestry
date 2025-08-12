@@ -2,8 +2,8 @@
 
 This repository contains workflows for retrieving, processing, and analyzing multi‑temporal lidar data to detect changes to tree canopies in forests. The pipeline supports:
 
-- **Data retrieval** from USGS EPT and OpenTopography
-- **Reprojection** and **tiling** of point cloud data  
+- **Data retrieval** from the USGS 3D Elevation Project and OpenTopography
+- **Reprojection** and **tiling** of lidar point cloud data  
 - **Extraction** of raster-based forest metrics (e.g., canopy height model, rumple index)  
 - **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
 - **Visualization** of topographic hillshades and change products via QGIS  
@@ -12,9 +12,9 @@ By standardizing each step in Jupyter notebooks and R scripts, this workflow ens
 
 ![Figure 1](figures/AGU.png)
 
-**Example Output: Canopy Height Change Analysis on the Kaibab Plateau (2012–2019)**
+**Example Output: Canopy Height Change Analysis on the Kaibab National Forest, northern Arizona (2012–2019)**
 
-The figure above illustrates forest structure change on the Kaibab Plateau in northern Arizona, derived using the multi-temporal lidar processing pipeline. Airborne lidar data from 2012 and 2019 were processed using this  pipeline.
+The figure above illustrates canopy height model change along the Kaibab National Forest in northern Arizona, derived using our multi-temporal lidar processing pipeline. Airborne lidar data from 2012 and 2019 were processed using this  pipeline.
 
 * **Main Map (left):** Displays CHM height change between 2012 and 2019.
 
