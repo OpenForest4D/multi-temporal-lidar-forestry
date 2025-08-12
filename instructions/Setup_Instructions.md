@@ -78,7 +78,7 @@ conda install -c conda-forge geopandas shapely pyproj
 
 These packages provide:
 
-* **pdal / python-pdal**: Lidar point‑cloud I/O and processing
+* **pdal / python-pdal**: lidar point‑cloud I/O and processing
 * **geopandas**, **shapely**, **pyproj**: vector geometry and coordinate transformations
 
 ---
