@@ -4,7 +4,7 @@ This repository contains workflows for retrieving, processing, and analyzing mul
 
 - **Data retrieval** from the USGS 3D Elevation Project and OpenTopography
 - **Reprojection** and **tiling** of lidar point cloud data  
-- **Extraction** of raster-based forest metrics (e.g., canopy height model, rumple index)  
+- **Extraction** of grid/raster-based forest metrics (e.g., canopy height model, rumple index)  
 - **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
 - **Visualization** of topographic hillshades and change products via QGIS  
 
@@ -16,10 +16,12 @@ By standardizing each step in Jupyter notebooks and R scripts, this workflow ens
 
 The figure above illustrates canopy height model change along the Kaibab National Forest in northern Arizona, derived using our multi-temporal lidar processing pipeline. Airborne lidar data from 2012 and 2019 were processed using this  pipeline.
 
-* **Main Map (left):** Displays CHM height change between 2012 and 2019.
-
-  * **Red areas** indicate loss in canopy height.
+* **Main Map (left):** Displays canopy height modelchange between 2012 and 2019.
+* 
   * **Blue areas** indicate gain in canopy height.
+  * **Whites areas** indicate no change in canopy height.
+  * **Red areas** indicate loss in canopy height.
+ 
 * **Insets (right):**
 
   * **Top:** CHM from 2012.
@@ -27,7 +29,7 @@ The figure above illustrates canopy height model change along the Kaibab Nationa
   * **Bottom:** Differenced CHM (2019 − 2012).
 * **Green Polygons:** Represent wildfire perimeters during the analysis period.
 
-This figure demonstrates the output of the full processing pipeline, from raw point cloud tiling and classification to raster generation, spatial alignment, differencing, and final visualization for ecological change analysis.
+This figure demonstrates the output of the full processing pipeline, from raw point cloud tiling and classification to raster generation, coordinate system projection, differencing, and final visualization for ecological change analysis.
 
 
 ---
@@ -102,23 +104,23 @@ If point clouds exist but tiling is needed:
   Open `notebooks/forestry_metrics.R` in RStudio and run end‑to‑end.
 * **Output:** GeoTIFF rasters (e.g., `CHM.tif`, `Rumple.tif`) saved under the same tile folder.
 
-### Step 2: CHM Differencing
+### Step 2:  Differencing of the Canopy Height Model and other raster products
 
-*  Compute pixel‑wise change between two dates to detect growth or disturbance.
+*  Compute pixel‑wise change between two dates to detect growth or disturbances to the forest.
 * **Notebook:**
-  `notebooks/differencing_script.ipynb` loads CHM rasters from two folders, calculates difference, and exports  difference GeoTIFFs.
-* **Output:** `CHM_Difference.tif` for each tile.
+  `notebooks/differencing_script.ipynb` loads rasters representing lidar data from different acqusitions from two folders, calculates difference, and exports the difference GeoTIFF files.
+* **Output:** (CHM) `CHM_Difference.tif` for each tile.
 
 
 
 ## 4. Visual Outputs & Interpretation
 
-This section presents a set of raster visualizations exported from QGIS to interpret forest structural metrics and temporal changes across lidar datasets. All outputs are derived from running the scripts in order. Hillshades are used for enhanced visual contrast and spatial comprehension.
+This section presents a set of raster visualizations exported from QGIS to interpret forest metrics and temporal changes across multi-temporal lidar datasets. All outputs are derived from running the scripts in order. Shaded relief maps/ hillshades are used for enhanced visual contrast and spatial comprehension.
 
 
 ### **4.1 Forest Metric Visualizations**
 
-Figure 1, 2, 3, 4, 5 represent the metrics calculated for the Kaibab National Forest of Northern Arizona using lidar collected in 2019.
+Figures 1, 2, 3, 4, and 5 represent the metrics calculated for the Kaibab National Forest of Northern Arizona using lidar collected in 2019.
 
 #### Figure 1. Canopy Height Model (CHM) 
 
