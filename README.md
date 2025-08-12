@@ -1,4 +1,4 @@
-# OpenForest4D Lidar Processing Pipeline
+# OpenForest4D lidar Processing Pipeline
 
 This repository contains workflows for retrieving, processing, and analyzing multi‑temporal lidar data to detect structural changes to forests. The pipeline supports:
 
@@ -12,11 +12,9 @@ By standardizing each step in Jupyter notebooks and R scripts, the project ensur
 
 ![Figure 1](figures/AGU.png)
 
----
+**Example Output: Canopy Height Change Analysis on the Kaibab Plateau (2012–2019)**
 
-### Example Output: Canopy Height Change Analysis on the Kaibab Plateau (2012–2019)
-
-The figure above illustrates forest structure change on the Kaibab Plateau in northern Arizona, derived using the multi-temporal Lidar processing pipeline. Airborne Lidar data from 2012 and 2019 were processed using this  pipeline.
+The figure above illustrates forest structure change on the Kaibab Plateau in northern Arizona, derived using the multi-temporal lidar processing pipeline. Airborne lidar data from 2012 and 2019 were processed using this  pipeline.
 
 * **Main Map (left):** Displays CHM height change between 2012 and 2019.
 
@@ -65,12 +63,11 @@ CITATION.cff
 
 ```
 
----
 
 ## 2. Installation & Setup
 
-Refer to **Setup Instructions** for full details (see below or [Data_Retrieval_Instructions.md]).
----
+Refer to Setup Instructions for full details (see below or [Data_Retrieval_Instructions.md]).
+
 
 ## 3. Workflow & How to Run
 
@@ -113,77 +110,82 @@ If point clouds exist but tiling is needed:
 * **Output:** `CHM_Difference.tif` for each tile.
 
 
----
 
 ## 4. Visual Outputs & Interpretation
 
-This section presents a set of raster visualizations exported from QGIS to interpret forest structural metrics and temporal changes across LiDAR datasets. All outputs are derived from running the scripts in order. Hillshades are used for enhanced visual contrast and spatial comprehension.
+This section presents a set of raster visualizations exported from QGIS to interpret forest structural metrics and temporal changes across lidar datasets. All outputs are derived from running the scripts in order. Hillshades are used for enhanced visual contrast and spatial comprehension.
 
----
 
 ### **4.1 Forest Metric Visualizations**
 
-Figure 1, 2, 3, 4, 5 represent the metrics calculated for the Kaibab Plateau of Northern Arizona using Lidar collected in 2019.
+Figure 1, 2, 3, 4, 5 represent the metrics calculated for the Kaibab National Forest of Northern Arizona using lidar collected in 2019.
 
-#### **Figure 1. Canopy Height Model (CHM) Hillshade **
+#### Figure 1. Canopy Height Model (CHM) 
 
 ![Figure 1](figures/chm_hillshade.png)
 
-*Hillshade of the CHM raster generated from normalized Lidar point cloud returns. Brighter areas represent taller vegetation.*
+*Hillshade of the normalized digital surface model generated from lidar point cloud returns.*
 
----
+U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
-#### **Figure 2. Digital Surface Model (DSM) Hillshade**
+![Figure 2](figures/CHM.png)
+
+U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
+
+
+#### Figure 2. Digital Surface Model (DSM) Hillshade
 
 ![Figure 2](figures/dsm_hillshade.png)
 
-*Surface elevation hillshade derived from the topmost Lidar returns.*
+*Surface elevation hillshade derived from the topmost lidar returns.*
 
----
+U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
-#### **Figure 3. Digital Terrain Model (DTM) Hillshade**
+
+#### Figure 3. Digital Terrain Model (DTM) Hillshade
 
 ![Figure 3](figures/dtm_hillshade.png)
 
 *Terrain-only hillshade, representing bare-earth elevation. Interpolated using the tin() method. Used as the base for CHM normalization.*
 
----
+U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
-#### **Figure 4. Canopy Cover Hillshade **
+
+#### Figure 4. Canopy Cover Hillshade
 
 ![Figure 4](figures/canopy_cover.png)
 
 *Image showing canopy cover percentage from first-return points above 1 meter. Calculated as the ratio of points above 1m to total first returns.*
 
----
+U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
-#### **Figure 5. Density >2m Hillshade — 2018**
+
+#### Figure 5. Density >2m Hillshade — 2018
 
 ![Figure 5](figures/density.png)
 
-*Proportion of Lidar returns greater than 2 meters height. Highlights spatial variability in mid-to-upper canopy density.*
+*Proportion of lidar returns greater than 2 meters height. Highlights spatial variability in mid-to-upper canopy density.*
 
----
+U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
-### **4.2 Differencing and VRT Visualizations**
 
-The below image represents the pixel-wise difference in canopy height between the years 2019 and 2021 of the Mangum fires in the Kaibab Plateau of Northern Arizona. They are made using the differencing_script.ipynb notebook and visualized in QGIS.
+### 4.2 Differencing and VRT Visualizations
 
-#### **Figure 6. CHM Difference Raster**
+The below image represents the pixel-wise difference in canopy height between the years 2019 and 2021 of the Castle fires in the Kaibab Plateau of Northern Arizona. They are made using the differencing_script.ipynb notebook and visualized in QGIS.
+
+#### Figure 6. CHM Difference Raster
 
 ![Figure 6](figures/chm_diff.png)
 
-*Positive values (blue) represent canopy growth, negative values (red) indicate loss because if the wildfire.*
+*Positive values (blue) represent canopy growth, negative values (red) indicate loss due to the wildfire.*
 
-
----
+U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
 ### Notes:
 
 * VRT mosaics are saved in the parent folder of each metric group for both original and differenced rasters.
 * These outputs can be further analyzed in QGIS as the next step.
 
----
 
 ## 5. Why This Project Matters
 
@@ -191,7 +193,6 @@ The below image represents the pixel-wise difference in canopy height between th
 * Supports large‑scale, multi‑temporal studies by automating tedious point‑cloud processing.
 * Delivers open‑source, reproducible workflows for the research community (OpenForest4D).
 
----
 
 ## 6. License & Citation
 
@@ -201,14 +202,13 @@ To cite this work, use the provided [CITATION.cff](CITATION.cff) or:
 
 ```bibtex
 @software{OpenForest4D,
-  title = {OpenForest4D Lidar Processing Pipeline},
+  title = {OpenForest4D lidar Processing Pipeline},
   author = {Your Name and collaborators},
   year = {2025},
   url = {https://github.com/YourUser/OpenForest4D}
 }
 ```
 
----
 
 ## 7. References & Further Reading
 
