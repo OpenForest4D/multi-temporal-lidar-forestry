@@ -2,25 +2,25 @@
 
 ## Overview
 
-This script processes tiled Lidar point clouds to generate high-resolution raster products essential for forest structure monitoring and ecosystem change analysis. It is part of the **OpenForest4D** pipeline, which supports repeatable forest metrics generation across timepoints. The script is built with `lidR`, `terra`, `sf`, and `future`, and is highly customizable and parallelized.
+This script processes tiled lidar point cloud datasets to generate high-resolution raster products used for forest structure monitoring and ecosystem change analysis. This is part of the **OpenForest4D** pipeline, which supports repeatable forest metrics calculated from multi-temporal lidar data. The script is built with `lidR`, `terra`, `sf`, and `future`, and is highly customizable and parallelized.
 
 ---
 
 ## What Metrics Are Generated and Why
 
-Each of the following geospatial products is derived from airborne Lidar and provides a different structural insight:
+Each of the following geospatial products is derived from airborne lidar data and provides insight into the structure of the forest canopy and bare-earth:
 
 ### 1. **Digital Surface Model (DSM)**
 
-The DSM represents the elevation of the highest surface hit by the laser, including canopy tops, buildings, and other features. It is critical for understanding forest canopy architecture and is generated using TIN-based interpolation over first returns.
+The DSM represents the elevation of the highest surface hit by the laser, including canopy tops, buildings, and other features. This product is important for understanding forest canopy architecture and is generated using TIN-based interpolation of the first lidar returns.
 
 ### 2. **Digital Terrain Model (DTM)**
 
-The DTM reflects the bare earth elevation by interpolating ground-classified returns. It is necessary for slope, elevation, and hydrological analysis, and serves as a reference for normalization.
+The DTM reflects the bare earth elevation by interpolating ground-classified returns. This can be used to calculate topographic slope, to conducted hydrological analysis, and to normalize heights.
 
 ### 3. **Canopy Height Model (CHM)**
 
-The CHM is obtained by subtracting the DTM from the DSM. It represents the vertical structure of vegetation and is used to assess canopy density, growth, biomass, and forest disturbances.
+The CHM is can be calculated in different ways and generally reflects in the difference between the DSM and DTM. The CHM represents the vertical structure of vegetation and is used to assess canopy density, growth, biomass, and forest disturbances.
 
 ### 4. **Rumple Index**
 
@@ -42,11 +42,11 @@ A shaded relief visualization based on slope and aspect derived from the raster 
 
 ## Code Explanation
 
-This R script defines a function `process_chm_pipeline()` that automates the extraction of the above metrics for all tiles in a given Lidar folder. Below is a breakdown of how it works.
+This R script defines a function `process_chm_pipeline()` that automates the extraction of the above metrics for all tiles in a given lidar folder. Below is a breakdown of how it works.
 
 ### 1. **Parallel Setup and Folder Initialization**
 
-The script uses the `future` package to run tiles in parallel (multisession plan). It creates separate output folders for each metric (DTM, DSM, CHM, etc.) under the specified `output_dir`.
+The script uses the `future` package to run tiles in parallel (multisession plan). The script creates separate output folders for each metric (DTM, DSM, CHM, etc.) under the specified `output_dir`.
 
 ### 2. **Lidar Catalog Configuration**
 
@@ -62,19 +62,19 @@ TIN-based canopy interpolation is used via `rasterize_canopy()` to estimate the 
 
 #### b. **DTM Generation**
 
-Ground returns are interpolated using `rasterize_terrain()` to compute the bare-earth surface. Like DSM, it can also incorporate geoid adjustments.
+Ground returns are interpolated using `rasterize_terrain()` to compute the bare-earth surface. Like a DSM, the DTM can also incorporate geoid adjustments.
 
 #### c. **Normalization**
 
-Raw LAS points are normalized (heights above ground) using `normalize_height()`. This step is essential for computing CHM and other height-dependent metrics.
+The point cloud is normalized (heights above ground) using `normalize_height()`. This step is essential for computing CHM and other height-dependent metrics.
 
 #### d. **CHM Computation**
 
-Using the normalized points, the CHM is rasterized. It is masked using DSM to remove any unclassified or noisy edge values.
+Using the normalized points, the CHM is rasterized and masked using the DSM to remove noisy edge values.
 
 #### e. **Hillshade (Optional)**
 
-If enabled, a shaded relief image is generated using slope and aspect calculations from the raster.
+If enabled, a shaded relief relief or hillshade image is generated using slope and aspect calculations from the raster.
 
 #### f. **Rumple Index**
 
@@ -82,11 +82,11 @@ If enabled, the Rumple Index is computed using surface points and a sliding grid
 
 #### g. **Canopy Cover**
 
-Computed as the proportion of first-return points above 1m in each grid cell. It requires normalized LAS and is output per tile.
+Computed as the proportion of first-return points above 1m in each grid cell. It requires a normalized point cloud file and is output per tile.
 
 #### h. **Density >2m**
 
-Proportion of all points above 2m in each cell. Useful for understanding vertical complexity across strata.
+Proportion of all points above 2m in each cell. Useful for understanding vertical complexity across forest strata.
 
 ### 4. **Output and Logging**
 
@@ -98,7 +98,7 @@ Each metric is saved with year-specific filenames and stored in separate folders
 
 ### 1. **Prepare The Inputs**
 
-* Ensure that the Lidar data is tiled and normalized if needed.
+* Ensure that the lidar point cloud data are tiled and normalized.
 * Place tiles in `base_dir`.
 * Ensure that there is a geoid file if vertical corrections are needed (in `.gtx` or `.tif`).
 
@@ -124,7 +124,7 @@ process_chm_pipeline(
 )
 ```
 
-* **`base_dir`**: This is the directory containing the pre-tiled Lidar data in `.las` or `.laz` format. The pipeline will read all tiles from this folder and process them in parallel. The tiling is assumed to be consistent in size and coordinate system, ensuring smooth edge handling when metrics are computed.
+* **`base_dir`**: This is the directory containing the pre-tiled lidar data in `.las` or `.laz` format. The pipeline will read all tiles from this folder and process the tiles in parallel. The tiling is assumed to be consistent in size and coordinate system, ensuring smooth edge handling when metrics are computed.
 
 * **`output_dir`**: This is where all raster outputs will be saved. The function creates subfolders inside this path for each type of derived product (e.g., DTM, CHM, Rumple). Having a centralized output location helps organize results and makes downstream analysis (e.g., differencing or mosaicking) easier.
 
