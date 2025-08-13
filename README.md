@@ -127,17 +127,16 @@ Figures 1, 2, 3, 4, and 5 represent the metrics calculated for the Kaibab Nation
 ![Figure 1](figures/chm_hillshade.png)
 
 #### Figure 1. Canopy Height Model (CHM) 
-
 *Hillshade/ shaded relief map of the normalized digital surface model generated from lidar data collected in 2019.*
-
 Data citation: U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
 ![Figure 2](figures/CHM.png)
-
-U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
-
-
 #### Figure 2. Digital Surface Model (DSM) Hillshade
+*Figure 2 caption here*
+Data citation: U.S. Geological Survey (2020).
+
+
+
 
 ![Figure 2](figures/dsm_hillshade.png)
 
