@@ -141,7 +141,7 @@ Data citation: U.S. Geological Survey (2020).
 
 ![Figure 2](figures/dsm_hillshade.png)
 
-*Surface elevation hillshade derived from the topmost lidar returns.*
+*Hillshade of the Digital Surface Model derived from the first lidar returns.*
 
 U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
@@ -150,7 +150,7 @@ U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopo
 
 ![Figure 3](figures/dtm_hillshade.png)
 
-*Terrain-only hillshade, representing bare-earth elevation. Interpolated using the tin() method. Used as the base for CHM normalization.*
+*Bare-earth topographic hillshade, interpolated using the triangulated irregular networktin (tin) method. Used as the base for point cloud normalization.*
 
 U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
@@ -159,7 +159,7 @@ U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopo
 
 ![Figure 4](figures/canopy_cover.png)
 
-*Image showing canopy cover percentage from first-return points above 1 meter. Calculated as the ratio of points above 1m to total first returns.*
+*Image showing canopy cover percentage of first-return points above 1 meter calculated at XX meter resolution. Calculated as the ratio of points above 1m relative to the total first returns.*
 
 U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
@@ -168,34 +168,34 @@ U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopo
 
 ![Figure 5](figures/density.png)
 
-*Proportion of lidar returns greater than 2 meters height. Highlights spatial variability in mid-to-upper canopy density.*
+*Proportion of all lidar returns greater than 2 meters height calculated at XX meter resolution. Highlights spatial variability in mid-to-upper canopy density.*
 
 U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
 
 ### 4.2 Differencing and VRT Visualizations
 
-The below image represents the pixel-wise difference in canopy height between the years 2019 and 2021 of the Castle fires in the Kaibab Plateau of Northern Arizona. They are made using the differencing_script.ipynb notebook and visualized in QGIS.
+The below image represents the pixel-wise difference in canopy height between the years 2019 and 2021 of the Castle fires in the Kaibab Plateau of Northern Arizona. These plots are made using the differencing_script.ipynb notebook and visualized in QGIS.
 
 #### Figure 6. CHM Difference Raster
 
 ![Figure 6](figures/chm_diff.png)
 
-*Positive values (blue) represent canopy growth, negative values (red) indicate loss due to the wildfire.*
+*Positive values (blue) represent canopy growth, values of zero (white) indicate no change, and negative values (red) indicate loss due to the wildfire.*
 
 U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
 ### Notes:
 
 * VRT mosaics are saved in the parent folder of each metric group for both original and differenced rasters.
-* These outputs can be further analyzed in QGIS as the next step.
+* These outputs can be further analyzed in QGIS.
 
 
 ## 5. Why This Project Matters
 
-* Enables quantitative monitoring of forest recovery after wildfires and other disturbances.
-* Supports large‑scale, multi‑temporal studies by automating tedious point‑cloud processing.
+* Supports large‑scale, multi‑temporal analysis by automating point‑cloud processing.
 * Delivers open‑source, reproducible workflows for the research community (OpenForest4D).
+* Enables quantitative monitoring of forest changes following wildfires and other disturbances.
 
 
 ## 6. License & Citation
