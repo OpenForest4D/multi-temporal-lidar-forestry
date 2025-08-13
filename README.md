@@ -126,9 +126,9 @@ Figures 1, 2, 3, 4, and 5 represent the metrics calculated for the Kaibab Nation
 
 ![Figure 1](figures/chm_hillshade.png)
 
-*Hillshade of the normalized digital surface model generated from lidar point cloud returns.*
+Hillshade/ shaded relief map of the normalized digital surface model generated from lidar data collected in 2019.
 
-U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
+Data citation: U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
 ![Figure 2](figures/CHM.png)
 
