@@ -224,7 +224,7 @@ lastile \
 * `-cores`: parallel processes
 
 > **Special case – already tiled & buffered LAS files**
-> If the files are already tiled and buffered, we still recommended that you merge the tiles and then re-tile them using the scipt or the command.
+> If the files are already tiled and buffered, we still recommend that you merge the tiles and then re-tile them using the scipt or the command.
 > For example, if the tiles are in `.las` format, to merge the file before re-tiling, use `lasmerge`:
 >
 > ```bash
