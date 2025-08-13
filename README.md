@@ -122,11 +122,13 @@ This section presents a set of raster visualizations exported from QGIS to inter
 
 Figures 1, 2, 3, 4, and 5 represent the metrics calculated for the Kaibab National Forest of Northern Arizona using lidar collected in 2019.
 
-#### Figure 1. Canopy Height Model (CHM) 
+
 
 ![Figure 1](figures/chm_hillshade.png)
 
-Hillshade/ shaded relief map of the normalized digital surface model generated from lidar data collected in 2019.
+#### Figure 1. Canopy Height Model (CHM) 
+
+*Hillshade/ shaded relief map of the normalized digital surface model generated from lidar data collected in 2019.*
 
 Data citation: U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
