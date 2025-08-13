@@ -1,3 +1,7 @@
+[![NSF-2409887](https://img.shields.io/badge/NSF-2409887-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2409887) 
+[![NSF-2409885](https://img.shields.io/badge/NSF-1948994-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948994)
+[![NSF-2409886](https://img.shields.io/badge/NSF-1948857-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948857)
+
 # OpenForest4D Multi-temporal lidar Processing Pipeline
 
 This repository contains workflows for retrieving, processing, and analyzing multi‑temporal lidar data to detect changes to tree canopies in forests. The pipeline supports:
@@ -8,7 +12,7 @@ This repository contains workflows for retrieving, processing, and analyzing mul
 - **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
 - **Visualization** of topographic hillshades and change products via QGIS  
 
-By standardizing each step in Jupyter notebooks and R scripts, this workflow ensures reproducibility, scalability, and ease of adaptation for applying these calculations to new areas with modern and legacy lidar datasets. This work is supported by the NSF‑funded OpenForest4D project at Arizona State University (Grant #2409887), UCSD (2409885), and UF (2409886).
+By standardizing each step in Jupyter notebooks and R scripts, this workflow ensures reproducibility, scalability, and ease of adaptation for applying these calculations to new areas with modern and legacy lidar datasets. This work is supported by the NSF‑funded OpenForest4D project and was conducted at Arizona State University. 
 
 ![Figure 1](figures/AGU.png)
 
