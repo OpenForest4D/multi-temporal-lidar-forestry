@@ -149,9 +149,9 @@ This function can be called multiple times to process different years or regions
 
 ---
 
-### **Geoid Correction File** (`.gtx` format) – *optional but recommended*
+### **Geoid Correction File** (`.gtx` format) – *optional but highly recommended*
 
-Most Lidar point clouds from USGS 3DEP and other sources are referenced to an **ellipsoidal vertical datum**—typically the WGS84 ellipsoid or NAD83. However, real-world elevation (what we perceive as “height above sea level”) is defined relative to a **geoid**, which approximates mean sea level and accounts for Earth's gravitational irregularities.
+Lidar point cloud elevation is typically referenced to ellipsoidal or orthometric heights. Comparing elevations (without normalization) in ellipsoidal heights with elevations orthometric heights will yeild large errors and comparing orthometric heights relative to different geoids (e.g., 2018 to 2003) will yield smaller errors. Orthometric heights are measured relative to a geoid that approximates sea level. The geoid models change and improve over time, and is important select geoid of your dataset when performing differencing. Learn more here: https://geodesy.noaa.gov/GEOID/
 
 #### Why this matters:
 
@@ -159,15 +159,13 @@ Most Lidar point clouds from USGS 3DEP and other sources are referenced to an **
   Without correction, your Digital Surface Models (DSM), Digital Terrain Models (DTM), and derived CHM will be **offset vertically**, often by **20 to 50 meters** depending on location.
 
 * **Consistency across years**
-  Applying geoid correction ensures that metrics like CHM are directly comparable across time points and regions—even if the original Lidar datasets used different vertical datums.
+  Applying geoid correction ensures that metrics like DSM and DTM are directly comparable across time and regions—even if the original lidar datasets are referenced to different vertical datums.
 
-* **Required for scientific accuracy**
-  When conducting ecological analysis, carbon stock estimation, or forest structure change detection, **absolute elevation matters**. Vertical bias can distort CHM values and affect downstream statistics.
 
 #### How it’s applied:
 
-* A geoid grid (e.g., `geoid_18_CONUS_save32612.gtx`) stores the vertical separation between the ellipsoid and the geoid in meters for every location.
-* During CHM processing, the script **adds this correction raster** to the DSM and DTM layers using bilinear resampling to apply a smooth, spatially-aware adjustment.
+* A geoid grid (e.g., `geoid_18_CONUS_save32612.gtx`- see below for how to generate the gtx file) stores the vertical separation between the ellipsoid and the geoid in meters for every location.
+* During the processing, the script **adds this correction raster** to the DSM and DTM layers using bilinear resampling to apply a smooth, spatially-aware adjustment.
 * The correction is done **after rasterization** but before differencing DSM and DTM.
 
 #### How to obtain or generate it:
@@ -180,7 +178,7 @@ Most Lidar point clouds from USGS 3DEP and other sources are referenced to an **
     -of GTX geoid_18_CONUS.tif geoid_18_CONUS_save32612.gtx
   ```
 
-**Note:** Even though this step is optional, it is *highly recommended* for vertical alignment across datasets and accurate CHM calculation.
+**Note:** Even though this step is optional, it is *highly recommended* for vertical alignment across datasets and accurate CHM calculation. Note, the R script does not perform this coordinate system reprojection on the gtx file. 
 
 
 ## Sample Outputs
@@ -221,13 +219,13 @@ These packages support high-performance point cloud processing, raster manipulat
 
 ## What’s Next: Change Detection and Visualization
 
-After generating CHM and related raster products for multiple time points (e.g., 2012 and 2018), you can proceed with:
+After generating CHM and other raster products for multiple lidar acquisitions (e.g., 2012 and 2018), you can proceed with:
 
 ### **Raster Differencing for Forest Change Detection**
 
 Use the included **raster differencing script** to compare structural metrics across years:
 
-* Compute **CHM differencing** (`CHM_2018 - CHM_2012`) to identify canopy loss or regrowth.
+* Compute **CHM differencing** (`CHM_2018 - CHM_2012`) to identify canopy change, for example loss or growth.
 * Compare other structural metrics such as Rumple Index or Canopy Cover before and after disturbance.
 * Automatically handle tile alignment, NoData values, and edge artifacts.
 
@@ -243,7 +241,4 @@ In QGIS, you can:
 * Apply color ramps or hillshades to analyze structure.
 * Use raster calculator to create custom visualizations.
 
----
-
-These next steps enable full **scientific interpretation**, **monitoring**, and **communication** of changes in forest canopy structure using Lidar-derived data.
 
