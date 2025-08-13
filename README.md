@@ -73,16 +73,16 @@ Refer to Setup Instructions for full details (see below or [Data_Retrieval_Instr
 
 ## 3. Workflow & How to Run
 
-### Option 1: Data Retrieval (if raw LAZ not already available)
+### Option 1: Data Retrieval (if point cloud LAZ/LAS files not already available)
 
 * **Primary method:**
-  Run `notebooks/intersection_data_retriever.ipynb` (USGS EPT).
+  Run `notebooks/intersection_data_retriever.ipynb` (USGS 3DEP- In Entwine Point Tiles (EPT) format (https://entwine.io from Amazon Web Services (AWS) Simple Storage Service (S3) Public Dataset bucket (https://registry.opendata.aws/usgs-lidar/).
 * **Alternative S3:**
   Check `Data_Retrieval_Instructions.md` steps for AWS S3.
 
 ### Option 2: Tiling
 
-If point clouds exist but tiling is needed:
+If point clouds are not yet tiled (likely to be the case):
 
 1. **Script:**
 
@@ -106,9 +106,9 @@ If point clouds exist but tiling is needed:
 
 ### Step 2:  Differencing of the Canopy Height Model and other raster products
 
-*  Compute pixel‑wise change between two dates to detect growth or disturbances to the forest.
+*  Compute pixel‑wise change between two two lidar acquisitions to detect change to the forest canopy.
 * **Notebook:**
-  `notebooks/differencing_script.ipynb` loads rasters representing lidar data from different acqusitions from two folders, calculates difference, and exports the difference GeoTIFF files.
+  `notebooks/differencing_script.ipynb` loads rasters representing lidar data from different acqusitions from two folders, calculates difference, and exports the difference as GeoTIFF files.
 * **Output:** (CHM) `CHM_Difference.tif` for each tile.
 
 
