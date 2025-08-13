@@ -1,6 +1,6 @@
 ## Data Retrieval
 
-The following sections describe the complete workflow for obtaining raw lidar data from both the OpenTopography AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and dividing it into manageable tiles. 
+The following sections describe the workflow for obtaining lidar point cloud data from both the OpenTopography bulk download AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and tiling the data into manageable tiles. 
 
 ---
 
@@ -20,7 +20,7 @@ To retrieve the most up‑to‑date version, see:
 
 2. **Intersection Computation**  
    The notebook reads the two named collections (for example,  
-   `"CA PlacerCo 2012"` and `"USGS LPC CA NoCAL Wildfires B5a 2018"`) and clips them to their overlapping footprint.  
+   `"CA PlacerCo 2012"` and `"USGS LPC CA NoCAL Wildfires B5a 2018"`) and clips the collections to their overlapping footprint.  
    The resulting polygon is written automatically to:  
    ```text
    data/placer_intersection.geojson
@@ -28,8 +28,8 @@ To retrieve the most up‑to‑date version, see:
 
 3. **Tile Grid Generation**  
    The notebook takes the clipped intersection polygon and automatically:  
-   - Reprojects it to the configured UTM zone (e.g., EPSG:32610).  
-   - Snaps it to a 1000 m grid and applies a 20 m buffer.  
+   - Reprojects it to the configured UTM zone (e.g., EPSG:32610 for UTM Zone 10, spanning the west coast of North America).  
+   - Tiles the dataset to a 1000 m tile width with an additional 20 m buffer.  
    - Writes the resulting grid of buffered tiles to:  
      ```text
      data/placer_tile_grid.geojson
@@ -38,7 +38,7 @@ To retrieve the most up‑to‑date version, see:
 
 4. **EPT Download**  
    Using the tile grid in `placer_tile_grid.geojson`, the notebook loops over each tile and:  
-   - Invokes PDAL’s EPT reader to fetch points within the buffered polygon.  
+   - Invokes PDAL’s EPT reader to fetch the point cloud datasets  within the buffered polygon.  
    - Reprojects points to the target CRS.  
    - Saves each nonempty tile as a `.laz` file under:  
      ```text
@@ -76,7 +76,7 @@ target_epsg          = "EPSG:32610"
   Exact `name` fields of the two collections to intersect. These must match entries in the boundaries GeoJSON.
 
 * `intersection_geojson`
-  Output path for the clipped intersection polygon. The next steps use this to limit the area of interest.
+  Output path for the clipped intersection polygon. The next steps use this to define the area of interest.
 
 * `tile_grid_geojson`
   Output path for the buffered, regular‑grid GeoJSON defining each tile’s footprint.
@@ -102,7 +102,7 @@ After editing, run the notebook sections in the same order as the cells:
 3. **Tile Grid Generation**
 4. **EPT Download**
 
-When complete, verify that `Placer_2012_Tiled/` (and `Placer_2018_Tiled/`) contain `.laz` files named by their lower‑left coordinates (for example, `500000_4200000.laz`).
+When complete, verify that `Placer_2012_Tiled/` (and `Placer_2018_Tiled/`) contain `.laz` files named by their lower‑left coordinates in the local UTM zone (for example, `500000_4200000.laz`).
 
 
 ---
@@ -115,7 +115,7 @@ OpenTopography hosts lidar collections in Amazon S3 buckets. The steps below s
 
 1. **Find the bucket address**
 
-   * On the OpenTopography website, open the Tahoe National Forest 2013 lidar dataset page.
+   * On the OpenTopography website (https://opentopography.org), open the Tahoe National Forest 2013 lidar dataset page (https://portal.opentopography.org/lidarDataset?opentopoID=OTLAS.032017.26910.1).
    * In the "Data Access" or "Download Options" section, copy the S3 URI. It looks like:
 
      ```text
@@ -172,7 +172,7 @@ aws s3 cp s3://pc-bulk/CA14_Guo/ \
 
 ### 1. Reprojection with LAS2LAS
 
-Raw LAZ files are stored in geographic coordinates (latitude/longitude), which can lead to inconsistent distance measurements. Reprojecting to a UTM zone ensures that coordinates are expressed in meters.
+The laz point clouds files can sometimes be stored in geographic coordinates (latitude/longitude), which can lead to inconsistent distance measurements. Reprojecting to the datasets to the same local UTM zone ensures that coordinates are expressed in meters and can be differenced following our workflow.
 
 ```bash
 las2las \
@@ -207,7 +207,7 @@ Refer to a UTM zone map to confirm the correct zone for each dataset.
 
 ### 3. Tiling with LASTile
 
-Break large LAZ files into 1000 m × 1000 m tiles with a 10 m buffer for edge continuity:
+Tile or break large laz files into 1000 m × 1000 m tiles with a 10 m buffer for edge continuity:
 
 ```bash
 lastile \
@@ -224,7 +224,7 @@ lastile \
 * `-cores`: parallel processes
 
 > **Special case – already tiled & buffered LAS files**
-> If the files are already tiled and buffered, it is recommended to merge the tiles and then re-tile them using the scipt or the command.
+> If the files are already tiled and buffered, we still recommended that you merge the tiles and then re-tile them using the scipt or the command.
 > For example, if the tiles are in `.las` format, to merge the file before re-tiling, use `lasmerge`:
 >
 > ```bash
