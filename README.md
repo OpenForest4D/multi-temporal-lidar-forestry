@@ -8,7 +8,7 @@ This repository contains workflows for retrieving, processing, and analyzing mul
 - **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
 - **Visualization** of topographic hillshades and change products via QGIS  
 
-By standardizing each step in Jupyter notebooks and R scripts, this workflow ensures reproducibility, scalability, and ease of adaptation for applying these calculations to new areas with modern and legacy lidar datasets. This work is supported by the NSF‑funded OpenForest4D project at Arizona State University.
+By standardizing each step in Jupyter notebooks and R scripts, this workflow ensures reproducibility, scalability, and ease of adaptation for applying these calculations to new areas with modern and legacy lidar datasets. This work is supported by the NSF‑funded OpenForest4D project at Arizona State University (Grant #2409887), UCSD (2409885), and UF (2409886).
 
 ![Figure 1](figures/AGU.png)
 
