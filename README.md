@@ -4,6 +4,11 @@
 
 # OpenForest4D Multi-temporal lidar Processing Pipeline
 
+**Authors**  
+- **Sreeja Krishnamari** (Primary Author)  
+- Chelsea Scott (Co-Author)
+
+
 This repository contains workflows for retrieving, processing, and analyzing multi‑temporal lidar data to detect changes to tree canopies in forests. The pipeline supports:
 
 - **Data retrieval** from the USGS 3D Elevation Project and OpenTopography
@@ -93,7 +98,7 @@ If point clouds are not yet tiled (likely to be the case):
    ```bash
     lastile -i C:\Users\sreeja\Documents\OpenForest4D\Data\*.laz ^
         -tile_size 1000 ^
-        -buffer 10 ^
+        -buffer 20 ^
         -odir C:\Users\sreeja\Documents\OpenForest4D\2012_tiled ^
         -olaz ^
         -cores 4
@@ -137,17 +142,14 @@ Data citation: U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distribu
 
 ![Figure 2](figures/CHM.png)
 #### Figure 2. Digital Surface Model (DSM) Hillshade
-*Figure 2 caption here*
+*This map shows vegetation height above ground level across the Kaibab National Forest, derived using the normalized point cloud method. Lidar returns were first normalized by subtracting the Digital Terrain Model (DTM) from the raw point elevations, setting ground height to zero. The resulting CHM depicts the tallest canopy returns per grid cell, with heights ranging from 0 m (yellow) to over 20 m (dark green).*
 Data citation: U.S. Geological Survey (2020).
-
-
-
 
 ![Figure 2](figures/dsm_hillshade.png)
 
 *Hillshade of the Digital Surface Model derived from the first lidar returns.*
 
-U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
+Data citation: U.S. Geological Survey (2020).
 
 
 #### Figure 3. Digital Terrain Model (DTM) Hillshade
@@ -156,25 +158,25 @@ U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopo
 
 *Bare-earth topographic hillshade, interpolated using the triangulated irregular networktin (tin) method. Used as the base for point cloud normalization.*
 
-U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
+Data citation: U.S. Geological Survey (2020).
 
 
 #### Figure 4. Canopy Cover Hillshade
 
 ![Figure 4](figures/canopy_cover.png)
 
-*Image showing canopy cover percentage of first-return points above 1 meter calculated at XX meter resolution. Calculated as the ratio of points above 1m relative to the total first returns.*
+*Image showing canopy cover percentage of first-return points above 1 meter calculated at 10 meter resolution. Calculated as the ratio of points above 1m relative to the total first returns.*
 
-U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
+Data citation: U.S. Geological Survey (2020).
 
 
 #### Figure 5. Density >2m Hillshade — 2018
 
 ![Figure 5](figures/density.png)
 
-*Proportion of all lidar returns greater than 2 meters height calculated at XX meter resolution. Highlights spatial variability in mid-to-upper canopy density.*
+*Proportion of all lidar returns greater than 2 meters height calculated at 10 meter resolution. Highlights spatial variability in mid-to-upper canopy density.*
 
-U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
+Data citation: U.S. Geological Survey (2020).
 
 
 ### 4.2 Differencing and VRT Visualizations
@@ -187,7 +189,8 @@ The below image represents the pixel-wise difference in canopy height between th
 
 *Positive values (blue) represent canopy growth, values of zero (white) indicate no change, and negative values (red) indicate loss due to the wildfire.*
 
-U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
+Data citation: U.S. Geological Survey (2020).
+
 
 ### Notes:
 
@@ -211,7 +214,7 @@ To cite this work, use the provided [CITATION.cff](CITATION.cff) or:
 ```bibtex
 @software{OpenForest4D,
   title = {OpenForest4D lidar Processing Pipeline},
-  author = {Your Name and collaborators},
+  author = {Sreeja Krishnamari and Chelsea Scott},
   year = {2025},
   url = {https://github.com/YourUser/OpenForest4D}
 }
