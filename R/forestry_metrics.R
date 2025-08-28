@@ -1,15 +1,15 @@
 # -------------------------------------------------------------------------------
 # Lidar Metric Extraction Pipeline for OpenForest4D
-# Project: OpenForest4D – NSF-funded research on multi-temporal Lidar forest analysis
+# Project: OpenForest4D – NSF-funded research on multi-temporal lidar forest analysis
 # 
 # Description:
-# This R script defines and runs 'process_chm_pipeline()', an end-to-end automated
+# This R script defines and runs 'process_chm_pipeline()', an automated
 # function for processing pre-tiled Lidar point cloud datasets to generate:
 #   - Digital Surface Models (DSM)
 #   - Digital Terrain Models (DTM)
 #   - Canopy Height Models (CHM)
 #   - Hillshades (optional)
-#   - Structural metrics: Rumple Index, Canopy Cover, Density >2m
+#   - Structural metrics including Rumple Index, Canopy Cover, Density 
 # Each tile is processed in parallel using 'catalog_apply()' from the 'lidR' package.
 #
 # Required Input:
@@ -39,11 +39,12 @@
 #       install.packages("geometry")
 #
 # Note:
-#   - If your geoid file is in '.tif' format, convert it to '.gtx' using:
+#   - To convert your geoid file from '.tif' to '.gtx' format, use::
 #       gdalwarp -overwrite -s_srs EPSG:4326 -t_srs EPSG:32612 -r bilinear \
 #         -of GTX geoid_18_CONUS.tif geoid_18_CONUS_save32612.gtx
-#   - Ensure all paths use forward slashes or double backslashes ('\\') on Windows.
-#   - This script assumes Lidar tiles are preprocessed, cleaned, and quality-checked.
+#     This can also be done on QGIS in raster-> projections -> warp(reproject)
+#   - When typing paths, remember to use single forward slashes or double backslashes ('\\') for Windows..
+#   - This script assumes lidar tiles are preprocessed, cleaned, and quality-checked.
 #
 # Documentation:
 #   - For step-by-step usage instructions and project rationale, see the R_metrics.md file.
@@ -80,7 +81,7 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
   # Set up output directories and configure the LAScatalog
   #
   # This section initializes the required folders for storing output rasters.
-  # Each metric type (DTM, DSM, CHM, Rumple, Canopy Cover, Density >2m) gets
+  # Each metric type (DTM, DSM, CHM, Rumple, Canopy Cover, Density) gets
   # its own subdirectory within the provided 'output_dir', organized for clarity
   # and modularity.
   #
@@ -257,7 +258,7 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       # Optionally, a hillshade image is generated to support better visualization of canopy structure.
       
       # Apply geoid correction to the DTM if a geoid file is provided.
-      # The geoid adjustment accounts for the difference between ellipsoidal height (from the Lidar sensor)
+      # The geoid adjustment accounts for the difference between ellipsoidal height (from the lidar sensor)
       # and orthometric height (more appropriate for terrain analysis), improving elevation accuracy.
       # The geoid raster is resampled and added to the DTM using bilinear interpolation to match resolutions.
       #
@@ -294,11 +295,11 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       
       
       # ----------- DTM with Geoid -----------
-      # Apply geoid correction to the DTM after generating the CHM.
+      # After creating the CHM, apply geoid correction to the DTM.
       # This ordering ensures consistency in vertical referencing:
       # 
-      # - The CHM is computed by subtracting the uncorrected DTM from the raw LAS elevation values.
-      #   Since the LAS data is in ellipsoidal height, we must use an *uncorrected* DTM for CHM normalization—
+      # - The uncorrected DTM is subtracted from the raw LAS elevation values to calculate the CHM.
+      #   Since the LAS data is in ellipsoidal height, we must use an *uncorrected* DTM for CHM normalization,
       #   otherwise we’d be mixing orthometric and ellipsoidal references, which would distort canopy heights.
       #
       # - Once the CHM is finalized, the geoid correction is applied to the DTM to convert it to orthometric height.
@@ -384,10 +385,11 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       
       
       # ---------- Density >2m ----------
-      # Compute the vertical point density above 2 meters, representing the proportion of points in the canopy layer.
+      #  Determine the percentage of points in the canopy layer by computing the vertical point density above two meters.
       #
-      # This metric is useful for assessing the vertical structure and vegetation density—particularly for identifying 
-      # mid-to-upper canopy biomass. It complements Canopy Cover by focusing on *point density* rather than *surface coverage*.
+      # This measure is helpful for evaluating the vegetation density and vertical structure, especially for determining 
+      # the biomass of the mid-to-upper canopy. By concentrating on *point density* as opposed to *surface coverage*, it enhances
+      # Canopy Cover.
       #
       # This block executes only if 'compute_density_2m' is TRUE and the corresponding raster doesn't already exist 
       # (or needs to be overwritten).
@@ -437,7 +439,7 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
 # Run the CHM processing pipeline for two different years: 2012 and 2018.
 #
 # This block invokes the full 'process_chm_pipeline()' function twice—once per year—
-# to extract Lidar-derived structural metrics from two timepoints. These metrics
+# to extract lidar-derived structural metrics from two timepoints. These metrics
 # will later be used to assess forest change over time.
 #
 # For each year:

@@ -2,7 +2,7 @@
 [![NSF-2409885](https://img.shields.io/badge/NSF-2409885-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2409885)
 [![NSF-2409886](https://img.shields.io/badge/NSF-2409886-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2409886)
 
-# OpenForest4D Multi-temporal lidar Processing Pipeline
+# OpenForest4D Multi-Temporal Lidar Processing Pipeline
 
 **Authors**  
 - **Sreeja Krishnamari** (Primary Author)  
@@ -135,44 +135,37 @@ Figures 1, 2, 3, 4, and 5 represent the metrics calculated for the Kaibab Nation
 
 ![Figure 1](figures/chm_hillshade.png)
 
-#### Figure 1. Canopy Height Model (CHM) 
+#### Figure 1. Canopy Height Model Hillshade (CHM) 
 *Hillshade/ shaded relief map of the normalized digital surface model generated from lidar data collected in 2019.*
 
 Data citation: U.S. Geological Survey (2020). AZ NorthKaibabNF B1 2019. Distributed by OpenTopography. https://portal.opentopography.org/usgsDataset?dsid=AZ_NorthKaibabNF_B1_2019. Accessed: 2025-05-13.
 
 ![Figure 2](figures/CHM.png)
-#### Figure 2. Digital Surface Model (DSM) Hillshade
+#### Figure 2. Canopy Height Model (CHM) 
+
+![Figure 3](figures/dsm_hillshade.png)
+#### Figure 3. Digital Surface Model (DSM) Hillshade
 *This map shows vegetation height above ground level across the Kaibab National Forest, derived using the normalized point cloud method. Lidar returns were first normalized by subtracting the Digital Terrain Model (DTM) from the raw point elevations, setting ground height to zero. The resulting CHM depicts the tallest canopy returns per grid cell, with heights ranging from 0 m (yellow) to over 20 m (dark green).*
 Data citation: U.S. Geological Survey (2020).
 
-![Figure 2](figures/dsm_hillshade.png)
+![Figure 4](figures/dtm_hillshade.png)
+#### Figure 4. Digital Terrain Model (DTM) Hillshade
 
-*Hillshade of the Digital Surface Model derived from the first lidar returns.*
-
-Data citation: U.S. Geological Survey (2020).
-
-
-#### Figure 3. Digital Terrain Model (DTM) Hillshade
-
-![Figure 3](figures/dtm_hillshade.png)
-
-*Bare-earth topographic hillshade, interpolated using the triangulated irregular networktin (tin) method. Used as the base for point cloud normalization.*
+*Bare-earth topographic hillshade, interpolated using the triangulated irregular network (tin) method. Used as the base for point cloud normalization.*
 
 Data citation: U.S. Geological Survey (2020).
 
 
-#### Figure 4. Canopy Cover Hillshade
-
-![Figure 4](figures/canopy_cover.png)
+![Figure 5](figures/canopy_cover.png)
+#### Figure 5. Canopy Cover Hillshade
 
 *Image showing canopy cover percentage of first-return points above 1 meter calculated at 10 meter resolution. Calculated as the ratio of points above 1m relative to the total first returns.*
 
 Data citation: U.S. Geological Survey (2020).
 
 
-#### Figure 5. Density >2m Hillshade — 2018
-
-![Figure 5](figures/density.png)
+![Figure 6](figures/density.png)
+#### Figure 6. Density >2m Hillshade — 2018
 
 *Proportion of all lidar returns greater than 2 meters height calculated at 10 meter resolution. Highlights spatial variability in mid-to-upper canopy density.*
 
@@ -183,12 +176,46 @@ Data citation: U.S. Geological Survey (2020).
 
 The below image represents the pixel-wise difference in canopy height between the years 2019 and 2021 of the Castle fires in the Kaibab Plateau of Northern Arizona. These plots are made using the differencing_script.ipynb notebook and visualized in QGIS.
 
-#### Figure 6. CHM Difference Raster
 
-![Figure 6](figures/chm_diff.png)
+![Figure 7](figures/chm_diff.png)
+#### Figure 7. CHM Difference Raster
 
-*Positive values (blue) represent canopy growth, values of zero (white) indicate no change, and negative values (red) indicate loss due to the wildfire.*
+*Positive values (green) represent canopy growth, values of zero (white) indicate no change, and negative values (red) indicate loss due to the wildfire.*
 
+Data citation: U.S. Geological Survey (2020).
+
+![Figure 8](figures/dsm_diff.png)
+### Figure 8: DSM Difference Raster
+
+*Positive values (green) represent increased surface elevation, often due to vegetation recovery or debris accumulation. Zero (white) indicates no change, while negative values (red) suggest loss of surface features like canopy due to wildfire damage in this case.*
+Data citation: U.S. Geological Survey (2020).
+
+
+![Figure 9](figures/dtm_diff.png)
+### Figure 9: DTM Difference Raster
+
+*Figure 9. Positive values (green) represent elevation gain in the bare-earth surface, potentially due to sediment deposition or ground movement. Zero (white) indicates stability, and negative values (red) reflect erosion or surface material loss, such as landslides.*
+Data citation: U.S. Geological Survey (2020).
+-
+
+![Figure 10](figures/rumple_diff.png)
+### Figure 10: Rumple Index Difference Raster
+
+*Figure 10. Positive values (green) indicate increased surface roughness and structural complexity, suggesting heterogeneous regrowth or debris presence. Zero (white) shows no change, while negative values (red) represent smoother surfaces caused by canopy or structure loss after wildfire.*
+Data citation: U.S. Geological Survey (2020).
+
+
+![Figure 11](figures/canopy_cover_diff.png)
+### Figure 11: Canopy Cover Difference Raster
+*Figure 11. Positive values (green) represent increased canopy cover, indicating vegetation regrowth. Zero (white) indicates no change, while negative values (red) show a reduction in canopy density.*
+Data citation: U.S. Geological Survey (2020).
+
+---
+
+![Figure 12](figures/density_diff.png)
+### Density >2m Difference Raster
+
+*Positive values (green) reflect an increase in lidar returns above 2 meters, suggesting canopy recovery. Zero (white) indicates unchanged vertical structure, and negative values (red) reflect thinning or removal of tall vegetation due to wildfire.*
 Data citation: U.S. Geological Survey (2020).
 
 
