@@ -20,9 +20,9 @@ This repository contains workflows for retrieving, processing, and analyzing mul
 
 | Notebook | Open in Colab |
 |----------|----------------|
-| Differencing Script | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/differencing_script.ipynb) |
-| Intersection Data Retriever | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/intersection_data_retriever.ipynb) |
-| Tiling | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/tiling.ipynb) |
+| Differencing Script | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/differencing_script.ipynb) |
+| Intersection Data Retriever | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/intersection_data_retriever.ipynb) |
+| Tiling | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/tiling.ipynb) |
 
 
 By standardizing each step in Jupyter notebooks and R scripts, this workflow ensures reproducibility, scalability, and ease of adaptation for applying these calculations to new areas with modern and legacy lidar datasets. This work is supported by the NSF‑funded OpenForest4D project and was conducted at Arizona State University. 
