@@ -210,7 +210,6 @@ Data citation: U.S. Geological Survey (2020).
 *Figure 11. Positive values (green) represent increased canopy cover, indicating vegetation regrowth. Zero (white) indicates no change, while negative values (red) show a reduction in canopy density.*
 Data citation: U.S. Geological Survey (2020).
 
----
 
 ![Figure 12](figures/density_diff.png)
 ### Density >2m Difference Raster
