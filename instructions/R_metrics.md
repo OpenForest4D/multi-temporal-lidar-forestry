@@ -187,12 +187,12 @@ Each metric will be saved as GeoTIFFs under a subfolder like:
 
 ```
 /output_dir/
-  ├── DTM_tiles/
-  ├── DSM_tiles/
-  ├── CHM_normalized_tiles/
-  ├── Rumple_tiles/
-  ├── Canopy_Cover_tiles/
-  └── Density_Tiles/
+  - DTM_Tiles/
+  - DSM_Tiles/
+  - CHM_Tiles/
+  - Rumple_Tiles/
+  - Canopy_Cover_Tiles/
+  - Density_Tiles/
 ```
 
 These files can be loaded directly into QGIS or ArcGIS.
