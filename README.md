@@ -8,7 +8,6 @@
 - **Sreeja Krishnamari** (Primary Author)  
 - Chelsea Scott (Co-Author)
 
-
 This repository contains workflows for retrieving, processing, and analyzing multi‑temporal lidar data to detect changes to tree canopies in forests. The pipeline supports:
 
 - **Data retrieval** from the USGS 3D Elevation Project and OpenTopography
@@ -16,6 +15,15 @@ This repository contains workflows for retrieving, processing, and analyzing mul
 - **Extraction** of grid/raster-based forest metrics (e.g., canopy height model, rumple index)  
 - **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
 - **Visualization** of topographic hillshades and change products via QGIS  
+
+## Run Notebooks in Google Colab
+
+| Notebook | Open in Colab |
+|----------|----------------|
+| Differencing Script | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/differencing_script.ipynb) |
+| Intersection Data Retriever | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/intersection_data_retriever.ipynb) |
+| Tiling | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/sreejakr/openforest4d-forest-metrics/blob/main/notebooks/tiling.ipynb) |
+
 
 By standardizing each step in Jupyter notebooks and R scripts, this workflow ensures reproducibility, scalability, and ease of adaptation for applying these calculations to new areas with modern and legacy lidar datasets. This work is supported by the NSF‑funded OpenForest4D project and was conducted at Arizona State University. 
 
