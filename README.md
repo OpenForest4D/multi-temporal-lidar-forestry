@@ -35,7 +35,7 @@ The figure above illustrates canopy height model change along the Kaibab Nationa
   * **Top:** CHM from 2012.
   * **Middle:** CHM from 2019.
   * **Bottom:** Differenced CHM (2019 − 2012).
-* **Green Polygons:** Represent wildfire perimeters during the analysis period.
+* **Green Polygons:** Represent wildfire perimeters during the analysis period from Monitoring Trends in Burn Severity (https://mtbs.gov).
 
 This figure demonstrates the output of the full processing pipeline, from raw point cloud tiling and classification to raster generation, coordinate system projection, differencing, and final visualization for ecological change analysis.
 
