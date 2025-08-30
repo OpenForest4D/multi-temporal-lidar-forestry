@@ -12,7 +12,7 @@ This repository contains workflows for retrieving, processing, and analyzing mul
 
 - **Data retrieval** from the USGS 3D Elevation Project and OpenTopography
 - **Reprojection** and **tiling** of lidar point cloud data  
-- **Extraction** of grid/raster-based forest metrics (e.g., canopy height model, rumple index)  
+- **Calculation** of grid/raster-based forest metrics (e.g., canopy height model, rumple index)  
 - **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
 - **Visualization** of topographic hillshades and change products via QGIS  
 
@@ -24,7 +24,7 @@ By standardizing each step in Jupyter notebooks and R scripts, this workflow ens
 
 The figure above illustrates canopy height model change along the Kaibab National Forest in northern Arizona, derived using our multi-temporal lidar processing pipeline. Airborne lidar data from 2012 and 2019 were processed using this  pipeline.
 
-* **Main Map (left):** Displays canopy height modelchange between 2012 and 2019.
+* **Main Map (left):** Displays canopy height model change between 2012 and 2019.
 * 
   * **Blue areas** indicate gain in canopy height.
   * **Whites areas** indicate no change in canopy height.
