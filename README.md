@@ -187,34 +187,34 @@ Data citation: U.S. Geological Survey (2020). OpenTopography (2012): Mapping the
 #### Figure 8: DSM Difference Raster
 
 *Positive values (green) represent increased surface elevation, often due to vegetation recovery or debris accumulation. Zero (white) indicates no change, while negative values (red) suggest loss of surface features like canopy due to wildfire damage in this case.*
-Data citation: U.S. Geological Survey (2020),OpenTopography (2012)
+Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
 
 ![Figure 9](figures/dtm_diff.png)
 #### Figure 9: DTM Difference Raster
 
 *Positive values (green) represent elevation gain in the bare-earth surface, potentially due to sediment deposition or ground movement. Zero (white) indicates stability, and negative values (red) reflect erosion or surface material loss, such as landslides.*
-Data citation: U.S. Geological Survey (2020),OpenTopography (2012)
+Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
 
 ![Figure 10](figures/rumple_diff.png)
 #### Figure 10: Rumple Index Difference Raster
 
 *Positive values (green) indicate increased surface roughness and structural complexity, suggesting heterogeneous regrowth or debris presence. Zero (white) shows no change, while negative values (red) represent smoother surfaces caused by canopy or structure loss after wildfire.*
-Data citation: U.S. Geological Survey (2020).
+Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
 
 ![Figure 11](figures/canopy_cover_diff.png)
 #### Figure 11: Canopy Cover Difference Raster
 *Positive values (green) represent increased canopy cover, indicating vegetation regrowth. Zero (white) indicates no change, while negative values (red) show a reduction in canopy density.*
-Data citation: U.S. Geological Survey (2020).
+Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
 
 ![Figure 12](figures/density_diff.png)
 #### Figure 12: Density >2m Difference Raster
 
 *Positive values (green) reflect an increase in lidar returns above 2 meters, suggesting canopy recovery. Zero (white) indicates unchanged vertical structure, and negative values (red) reflect thinning or removal of tall vegetation due to wildfire.*
-Data citation: U.S. Geological Survey (2020).
+Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
 
 ### Notes:
