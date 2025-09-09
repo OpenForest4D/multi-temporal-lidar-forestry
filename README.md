@@ -249,4 +249,3 @@ To cite this work, use the provided [CITATION.cff](CITATION.cff) or:
 * lidR R package: [cran.r-project.org/web/packages/lidR/](https://cran.r-project.org/web/packages/lidR/index.html)
 * UTM coordinate system overview: [epsg.io/32610](https://epsg.io/32610)
 
----
