@@ -2,27 +2,26 @@
 [![NSF-2409885](https://img.shields.io/badge/NSF-2409885-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2409885)
 [![NSF-2409886](https://img.shields.io/badge/NSF-2409886-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2409886)
 
-# OpenForest4D Multi-Temporal Lidar Processing Pipeline
+# Multi-Temporal Lidar Workflow for Forest Change Mapping
 
-**Authors**  
-- **Sreeja Krishnamari** (Primary Author)  
-- Chelsea Scott (Co-Author)
+This repository contains reproducible workflows for retrieving, processing, and analyzing multi-temporal lidar data to detect changes in forest canopies, with example applications in wildfire-affected forests. This project is supported by NSF funded OpenForest4D project and developed at Arizona State University.
+- Authors:  Sreeja Krishnamari (Primary Author), Chelsea Scott (Co-Author)
 
-This repository contains workflows for retrieving, processing, and analyzing multi‑temporal lidar data to detect changes to tree canopies in forests. The pipeline supports:
+The workflow supports:
 
-- **Data retrieval** from the USGS 3D Elevation Project and OpenTopography
-- **Reprojection** and **tiling** of lidar point cloud data  
-- **Calculation** of grid/raster-based forest metrics using lidR (e.g., canopy height model, rumple index)  
-- **Differencing** of DSM's, DTM's, canopy height models, canopy cover and rumple over time
-- **Visualization** of topographic hillshades and change products via QGIS  
+- Data retrieval from the USGS 3D Elevation Project and OpenTopography
+- Lidar point cloud reprojection and tiling  
+- Grid/raster-based forest metrics calculation (e.g., canopy height model, rumple index)  
+- Temporal differencing of DSM's, DTM's, canopy height models, canopy cover and rumple over time
+- Topographic hillshades and change visulizations via QGIS  
 
-By standardizing each step in Jupyter notebooks and R scripts, this workflow ensures reproducibility, scalability, and ease of adaptation for applying these calculations to new areas with modern and legacy lidar datasets. This work is supported by the NSF‑funded OpenForest4D project and was conducted at Arizona State University. 
+Standardizing each step in Jupyter notebooks and R scripts makes the workflow reproducible, scalable, and easily adaptable for applying these calculations to new regions using both modern and legacy lidar datasets.
 
 ![Figure 1](figures/AGU.png)
 
 **Example Output: Canopy Height Change Analysis on the Kaibab National Forest, northern Arizona (2012–2019)**
 
-The figure above illustrates canopy height model change along the Kaibab National Forest in northern Arizona, derived using our multi-temporal lidar processing pipeline. Airborne lidar data from 2012 and 2019 were processed using this  pipeline.
+The figure above shows changes in the canopy height model along the Kaibab National Forest in northern Arizona, generated with our multi-temporal lidar processing workflow. The workflow was applied to airborne lidar data collected in 2012 and 2019.
 
 * **Main Map (left):** Displays canopy height model change between 2012 and 2019.
 * 
@@ -34,102 +33,96 @@ The figure above illustrates canopy height model change along the Kaibab Nationa
 
   * **Top:** CHM from 2012.
   * **Middle:** CHM from 2019.
-  * **Bottom:** Differenced CHM (2019 − 2012).
+  * **Bottom:** Differenced CHM (2019 - 2012).
 * **Green Polygons:** Represent wildfire perimeters during the analysis period from Monitoring Trends in Burn Severity (https://mtbs.gov).
 
-This figure demonstrates the output of the full processing pipeline, from raw point cloud tiling and classification to raster generation, coordinate system projection, differencing, and final visualization for ecological change analysis.
+This figure illustrates the complete processing workflow, starting with raw point cloud tiling and classification, followed by raster generation, projection to a common coordinate system, differencing, and culminating in the final visualization used for ecological change analysis.
 
 
----
 
 ## 1. Repository Structure
 
 ```
 
 project-root/
-data/
-  usgs_3dep_boundaries.geojson
+  data/
+    usgs_3dep_boundaries.geojson
 
-notebooks/
-  intersection_data_retriever.ipynb
-  tiling.ipynb
-  differencing_script.
-  tiling.ipynb
+  notebooks/
+    intersection_data_retriever.ipynb
+    tiling.ipynb
+    differencing_script.ipynb
 
-R/
-  forestry_metrics.R
-  classify_ground.R
+  R/
+    forestry_metrics.R
+    classify_ground.R
 
-instructions/
-  Data_Retrieval_Instructions.md
-  R_metrics.md
-  Setup_Instructions.md
+  instructions/
+    Setup_Instructions.md
+    Data_Retrieval_Instructions.md
+    R_metrics.md
 
-environment.yml
-README.md
-LICENSE
-CITATION.cff
-
-
+  environment.yml
+  LICENSE
+  CITATION.cff
+  README.md
 ```
 
 
-## 2. Installation & Setup
+## 2. Installation & Quick Start
 
-Refer to Setup Instructions for full details (see below or [Data_Retrieval_Instructions.md]).
+Refer to [instructions/Setup_Instructions.md](instructions/Setup_Instructions.md) for platform-specific setup steps.
 
 
-## 3. Workflow & How to Run
 
-### Option 1: Data Retrieval (if point cloud LAZ/LAS files not already available)
+## 3. Workflow Summary
+
+### Step 1: Data Retrieval
 
 * **Primary method:**
-  Run `notebooks/intersection_data_retriever.ipynb` (USGS 3DEP- In Entwine Point Tiles (EPT) format (https://entwine.io from Amazon Web Services (AWS) Simple Storage Service (S3) Public Dataset bucket (https://registry.opendata.aws/usgs-lidar/).
+  Run `notebooks/intersection_data_retriever.ipynb` - This notebook automates the retrieval of lidar point-cloud data for a specified region of interest by leveraging the USGS 3DEP Entwine Point Tile (EPT) service. (https://registry.opendata.aws/usgs-lidar/)
+  
 * **Alternative S3:**
-  Check `Data_Retrieval_Instructions.md` steps for AWS S3.
+  Follow steps in `instructions/Data_Retrieval_Instructions.md` for obtaining lidar point cloud data from both the OpenTopography bulk download AWS S3 buckets and the USGS EPT (Entwine Point Tile) service, reprojecting the data into a consistent coordinate system, and tiling the data into manageable tiles.
 
-### Option 2: Tiling
+### Step 2: Tiling (Optional):
 
 If point clouds are not yet tiled (likely to be the case):
 
 1. **Script:**
 
    ```bash
-    lastile -i C:\Users\sreeja\Documents\OpenForest4D\Data\*.laz ^
+    lastile -i /data/*.laz ^
         -tile_size 1000 ^
         -buffer 20 ^
-        -odir C:\Users\sreeja\Documents\OpenForest4D\2012_tiled ^
+        -odir /data/2012_tiled ^
         -olaz ^
         -cores 4
    ```
 2. **Notebook fallback:**
-   Open `notebooks/tiling.ipynb`, set `input_dir`, `output_dir`, `tile_size`, `buffer`, `cores`, then run the "Tiling LAZ files" cell.
 
-### Step 1: Extract Forest Metrics
+    Run `notebooks/tiling.ipynb` to tile LAZ/LAS files after setting `input_dir`, `output_dir`, `tile_size`, `buffer`, `cores`.
+
+### Step 3: Forest Metrics Extraction
 
 *  Derive canopy height, canopy cover, rumple index, and point density metrics for each tile.
-* **Script:**
-  Open `notebooks/forestry_metrics.R` in RStudio and run end‑to‑end.
+* **Script:** Run `notebooks/forestry_metrics.R` calculate canopy height, rumple index, cover, etc. 
 * **Output:** GeoTIFF rasters (e.g., `CHM.tif`, `Rumple.tif`) saved under the same tile folder.
 
-### Step 2:  Differencing of the Canopy Height Model and other raster products
+### Step 4:  Differencing of the Canopy Height Model and other raster products
 
-*  Compute pixel‑wise change between two two lidar acquisitions to detect change to the forest canopy.
-* **Notebook:**
-  `notebooks/differencing_script.ipynb` loads rasters representing lidar data from different acqusitions from two folders, calculates difference, and exports the difference as GeoTIFF files.
-* **Output:** (CHM) `CHM_Difference.tif` for each tile.
-
+*  Compute pixel-wise change between two two lidar acquisitions to detect change to the forest canopy.
+* **Notebook:** Use  `notebooks/differencing_script.ipynb` to compare and export difference rasters (e.g., Canopy Height Change).
+* **Output:** (CHM) `CHM_Difference.tif` for each tile.  
 
 
-## 4. Visual Outputs & Interpretation
+## 4. Visualization Outputs & Interpretation
 
-This section presents a set of raster visualizations exported from QGIS to interpret forest metrics and temporal changes across multi-temporal lidar datasets. All outputs are derived from running the scripts in order. Shaded relief maps/ hillshades are used for enhanced visual contrast and spatial comprehension.
-
+This section shows raster visualizations exported from QGIS that illustrate forest metrics and temporal changes from multi-temporal lidar datasets. All outputs are generated sequentially by running the provided scripts. Shaded relief maps (hillshades) are included to improve visual contrast and spatial interpretation.
 
 ### **4.1 Forest Metric Visualizations**
 
 Figures 1, 2, 3, 4, and 5 represent the metrics calculated for the Kaibab National Forest of Northern Arizona using lidar collected in 2019.
-
 
 
 ![Figure 1](figures/chm_hillshade.png)
@@ -223,10 +216,10 @@ Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 * These outputs can be further analyzed in QGIS.
 
 
-## 5. Why This Project Matters
+## 5. Project Importance and Applications
 
-* Supports large‑scale, multi‑temporal analysis by automating point‑cloud processing.
-* Delivers open‑source, reproducible workflows for the research community (OpenForest4D).
+* Supports large-scale, multi-temporal analysis by automating point-cloud processing.
+* Delivers open-source, reproducible workflows for the research community (OpenForest4D).
 * Enables quantitative monitoring of forest changes following wildfires and other disturbances.
 
 
@@ -237,21 +230,23 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 To cite this work, use the provided [CITATION.cff](CITATION.cff) or:
 
 ```bibtex
-@software{OpenForest4D,
-  title = {OpenForest4D lidar Processing Pipeline},
-  author = {Sreeja Krishnamari and Chelsea Scott},
+@software{multi-temporal-lidar-forestry,
+  author = {Krishnamari, Sreeja and Scott, Chelsea},
+  title = {{Multi-Temporal Lidar Workflow for Forest Change Mapping}},
   year = {2025},
-  url = {https://github.com/YourUser/OpenForest4D}
+  url = {https://github.com/OpenForest4D/multi-temporal-lidar-forestry},
+  note = {GitHub repository}
 }
+
 ```
 
 
 ## 7. References & Further Reading
 
-* USGS 3DEP EPT service: [https://3dep.us](https://3dep.us)
-* OpenTopography AWS S3 access: [https://opentopography.org](https://opentopography.org)
-* PDAL documentation: [https://pdal.io](https://pdal.io)
-* lidR R package: [https://cran.r‑project.org/package=lidR](https://cran.r‑project.org/package=lidR)
-* UTM coordinate system overview: [https://epsg.io/32610](https://epsg.io/32610)
+* USGS 3DEP EPT service: [https://registry.opendata.aws/usgs-lidar/](https://registry.opendata.aws/usgs-lidar/)
+* OpenTopography: [www.opentopography.org](https://opentopography.org)
+* PDAL documentation: [pdal.io](https://pdal.io)
+* lidR R package: [cran.r-project.org/web/packages/lidR/](https://cran.r-project.org/web/packages/lidR/index.html)
+* UTM coordinate system overview: [epsg.io/32610](https://epsg.io/32610)
 
 ---
