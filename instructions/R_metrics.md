@@ -1,10 +1,8 @@
-# README: R Script for CHM and Terrain Metric Extraction
+# R Script for CHM and Terrain Metric Extraction
 
 ## Overview
 
-This script processes tiled lidar point cloud datasets to generate high-resolution raster products used for forest structure monitoring and ecosystem change analysis. This is part of the **OpenForest4D** pipeline, which supports repeatable forest metrics calculated from multi-temporal lidar data. The script is built with `lidR`, `terra`, `sf`, and `future`, and is highly customizable and parallelized.
-
----
+This workflow pipeline processes tiled lidar point cloud datasets to generate high-resolution raster products used for forest structure monitoring and ecosystem change analysis. This workflow supports repeatable forest metrics calculated from multi-temporal lidar data. It leverages `lidR`, `terra`, `sf`, and `future` packages, and is highly customizable and parallelized.  
 
 ## What Metrics Are Generated and Why
 
@@ -36,9 +34,8 @@ This metric estimates the proportion of all Lidar points in a cell that fall abo
 
 ### 7. **Hillshade (optional)**
 
-A shaded relief visualization based on slope and aspect derived from the raster (DSM/CHM/DTM). Useful for visual inspection and 3D effect rendering.
-
----
+A shaded relief visualization based on slope and aspect derived from the raster (DSM/CHM/DTM). Useful for visual inspection and 3D effect rendering.  
+  
 
 ## Code Explanation
 
@@ -56,43 +53,34 @@ A LAScatalog object is created from the `base_dir`. Tiling and buffer settings a
 
 Each tile is read and processed via `catalog_apply()`. For each tile, the following steps are executed:
 
-#### a. **DSM Generation**
+  #### a. **DSM Generation**
+  TIN-based canopy interpolation is used via `rasterize_canopy()` to estimate the highest points. DSMs can optionally be adjusted using a geoid correction raster.
 
-TIN-based canopy interpolation is used via `rasterize_canopy()` to estimate the highest points. DSMs can optionally be adjusted using a geoid correction raster.
+  #### b. **DTM Generation**
+  Ground returns are interpolated using `rasterize_terrain()` to compute the bare-earth surface. Like a DSM, the DTM can also incorporate geoid adjustments.
 
-#### b. **DTM Generation**
+  #### c. **Normalization**
+  The point cloud is normalized (heights above ground) using `normalize_height()`. This step is essential for computing CHM and other height-dependent metrics.
 
-Ground returns are interpolated using `rasterize_terrain()` to compute the bare-earth surface. Like a DSM, the DTM can also incorporate geoid adjustments.
+  #### d. **CHM Computation**
+  Using the normalized points, the CHM is rasterized and masked using the DSM to remove noisy edge values.
 
-#### c. **Normalization**
+  #### e. **Hillshade (Optional)**
+  If enabled, a shaded relief relief or hillshade image is generated using slope and aspect calculations from the raster.
 
-The point cloud is normalized (heights above ground) using `normalize_height()`. This step is essential for computing CHM and other height-dependent metrics.
+  #### f. **Rumple Index**
+  If enabled, the Rumple Index is computed using surface points and a sliding grid window. It is written as a raster using `writeRaster()`.
 
-#### d. **CHM Computation**
+  #### g. **Canopy Cover**
+  Computed as the proportion of first-return points above 1m in each grid cell. It requires a normalized point cloud file and is output per tile.
 
-Using the normalized points, the CHM is rasterized and masked using the DSM to remove noisy edge values.
-
-#### e. **Hillshade (Optional)**
-
-If enabled, a shaded relief relief or hillshade image is generated using slope and aspect calculations from the raster.
-
-#### f. **Rumple Index**
-
-If enabled, the Rumple Index is computed using surface points and a sliding grid window. It is written as a raster using `writeRaster()`.
-
-#### g. **Canopy Cover**
-
-Computed as the proportion of first-return points above 1m in each grid cell. It requires a normalized point cloud file and is output per tile.
-
-#### h. **Density >2m**
-
-Proportion of all points above 2m in each cell. Useful for understanding vertical complexity across forest strata.
+  #### h. **Density >2m**
+  Proportion of all points above 2m in each cell. Useful for understanding vertical complexity across forest strata.
 
 ### 4. **Output and Logging**
 
 Each metric is saved with year-specific filenames and stored in separate folders. Logs are printed per tile to track failures, missing data, or metrics that were skipped.
-
----
+  
 
 ## How to Use This Script
 
@@ -140,16 +128,14 @@ process_chm_pipeline(
 
 * **`compute_rumple`, `compute_canopy_cover`, and `compute_density_2m`**: These flags determine whether to compute the structural metrics derived from the CHM or point cloud. Rumple Index quantifies surface roughness, Canopy Cover measures the proportion of first returns above a certain height, and Density >2m calculates the fraction of returns above 2 meters. These metrics are especially useful in forestry, ecology, and disturbance studies.
 
-* **`metric_res`**: This sets the resolution (in meters) for the derived metrics like Rumple, Canopy Cover, and Density >2m. A typical value is 10, which means each output cell represents a 10×10 meter grid area. Adjust this depending on the study area size and Lidar point density.
+* **`metric_res`**: This sets the resolution (in meters) for the derived metrics like Rumple, Canopy Cover, and Density >2m. A typical value is 10, which means each output cell represents a 10x10 meter grid area. Adjust this depending on the study area size and Lidar point density.
 
 * **`size` and `buffer`**: `size` defines the tile dimension (e.g., 1000 meters square), and `buffer` adds a margin around each tile (e.g., 20 meters) to prevent edge effects during interpolation and smoothing. Buffers ensure smoother transitions between neighboring tiles and avoid artifacts at tile boundaries.
 
-
 This function can be called multiple times to process different years or regions.
-
----
-
-### **Geoid Correction File** (`.gtx` format) – *optional but highly recommended*
+  
+  
+## **Geoid Correction File** (`.gtx` format) - *optional but highly recommended*
 
 Lidar point cloud elevation is typically referenced to ellipsoidal or orthometric heights. Comparing elevations (without normalization) in ellipsoidal heights with elevations orthometric heights will yeild large errors and comparing orthometric heights relative to different geoids (e.g., 2018 to 2003) will yield smaller errors. Orthometric heights are measured relative to a geoid that approximates sea level. The geoid models change and improve over time, and is important select geoid of your dataset when performing differencing. Learn more here: https://geodesy.noaa.gov/GEOID/
 
@@ -162,7 +148,7 @@ Lidar point cloud elevation is typically referenced to ellipsoidal or orthometri
   Applying geoid correction ensures that metrics like DSM and DTM are directly comparable across time and regions—even if the original lidar datasets are referenced to different vertical datums.
 
 
-#### How it’s applied:
+#### How it's applied:
 
 * A geoid grid (e.g., `geoid_18_CONUS_save32612.gtx`- see below for how to generate the gtx file) stores the vertical separation between the ellipsoid and the geoid in meters for every location.
 * During the processing, the script **adds this correction raster** to the DSM and DTM layers using bilinear resampling to apply a smooth, spatially-aware adjustment.
@@ -179,7 +165,7 @@ Lidar point cloud elevation is typically referenced to ellipsoidal or orthometri
   ```
 
 **Note:** Even though this step is optional, it is *highly recommended* for vertical alignment across datasets and accurate CHM calculation. Note, the R script does not perform this coordinate system reprojection on the gtx file. 
-
+  
 
 ## Sample Outputs
 
@@ -196,9 +182,7 @@ Each metric will be saved as GeoTIFFs under a subfolder like:
 ```
 
 These files can be loaded directly into QGIS or ArcGIS.
-
----
-
+  
 
 ## Requirements
 
@@ -214,10 +198,9 @@ These files can be loaded directly into QGIS or ArcGIS.
   ```
 
 These packages support high-performance point cloud processing, raster manipulation, spatial transformations, and parallel computation.
+  
 
----
-
-## What’s Next: Change Detection and Visualization
+## Next Steps: Change Detection and Visualization
 
 After generating CHM and other raster products for multiple lidar acquisitions (e.g., 2012 and 2018), you can proceed with:
 
@@ -241,4 +224,4 @@ In QGIS, you can:
 * Apply color ramps or hillshades to analyze structure.
 * Use raster calculator to create custom visualizations.
 
-
+> This work is part of the OpenForest4D project and is supported by funding from the National Science Foundation through awards 2409885, 2409886, and 2409887.

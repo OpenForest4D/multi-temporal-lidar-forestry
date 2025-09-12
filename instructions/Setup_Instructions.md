@@ -1,22 +1,18 @@
 # Setup Instructions
-
-These instructions are a guide for installing all necessary software, creating environments, and running the provided Jupyter and R scripts. 
-
-
----
+These instructions outline how to install the required software, set up environments, and run the included Jupyter and R scripts.
 
 ## 1. Installing Python and Conda
 
-Python 3.8 or higher is required. The Conda package manager provides isolated environments and consistent dependency resolution.
+Python 3.8 or higher is required. The Conda package manager provides isolated environments and consistent dependency resolution.
 
 1. **Download the Anaconda distribution**  
    - Official Anaconda installer (includes conda plus ~200 packages):  
      https://www.anaconda.com/products/distribution  
    - Choose the appropriate installer for Windows, macOS, or Linux.  
-   - Follow on‑screen prompts to complete installation.
+   - Follow on-screen prompts to complete installation.
 
 2. **(Optional) Install Miniconda for a lightweight setup**  
-   - Miniconda contains only conda and its core dependencies (~50 MB).  
+   - Miniconda contains only conda and its core dependencies (~50 MB).  
    - Subsequent packages are installed on demand, reducing disk usage and update time.  
    - Official Miniconda page:  
      https://docs.conda.io/en/latest/miniconda.html  
@@ -31,43 +27,38 @@ Python 3.8 or higher is required. The Conda package manager provides isolated 
    conda --version
    ```
 
-
 ## 2. Cloning the Repository and Environment File
 
 The repository contains an `environment.yml` manifest listing all Python and R dependencies.
 
 1. Clone the GitHub repository:  
    ```bash
-   git clone https://github.com/YourUser/YourRepo.git
-   cd YourRepo
-  ```
-
+   git clone https://github.com/OpenForest4D/multi-temporal-lidar-forestry.git
+   cd multi-temporal-lidar-forestry
+   ```
 2. Inspect `environment.yml` to review listed packages.
 
----
+3. Creating the Conda Environment
 
-## 4. Creating the Conda Environment
+   Creating a dedicated environment prevents conflicts with other Python projects.
 
-Creating a dedicated environment prevents conflicts with other Python projects.
-
-1. Create and activate the environment named **lidar\_env**:
+4. Create and activate the environment named **lidar_env**:
 
    ```bash
    conda env create -f environment.yml
    conda activate lidar_env
    ```
 
-2. Verify installation:
+5. Verify installation:
 
    ```bash
    conda list
    ```
-
    * Confirms that packages such as **geopandas**, **shapely**, **pyproj**, **pdal**, and **jupyterlab** are present.
 
 ---
 
-## 5. Installing Additional Python Packages
+## 3. Installing Additional Python Packages
 
 If `environment.yml` is modified or missing certain tools, install via Conda:
 
@@ -81,9 +72,7 @@ These packages provide:
 * **pdal / python-pdal**: lidar point‑cloud I/O and processing
 * **geopandas**, **shapely**, **pyproj**: vector geometry and coordinate transformations
 
----
-
-## 6. Launching JupyterLab
+## 4. Launching JupyterLab
 
 JupyterLab offers an interactive interface for notebooks.
 
@@ -94,51 +83,43 @@ JupyterLab offers an interactive interface for notebooks.
    ```
 2. In the browser window, navigate to the `notebooks/` folder and open the desired `.ipynb` file.
 
----
+## 5. Using Google Colab (Optional)
 
-## 7. Using Google Colab (Optional)
+For cloud based execution:
 
-For cloud execution without local setup:
-
-1. Open Colab:
+   1. Open Google Colab:
    [https://colab.research.google.com](https://colab.research.google.com)
-2. Select **GitHub** and paste the repository URL.
-3. Run cells directly in the browser.
-4. Install missing dependencies in a cell, for example:
+   2. Select **GitHub** and paste the repository URL.
+   3. Run cells directly in the browser.
+   4. Install missing dependencies in a cell, for example:
 
-   ```bash
-   !pip install geopandas shapely pyproj pdal
-   ```
+      ```bash
+      !pip install geopandas shapely pyproj pdal
+      ```
 
----
-
-## 8. Installing R and RStudio
+## 6. Installing R and RStudio
 
 R scripts require R 4.0+ and RStudio for interactive editing.
 
-1. Install R from CRAN:
-   [https://cran.r-project.org](https://cran.r-project.org)
-2. Install RStudio Desktop:
-   [https://www.rstudio.com/products/rstudio/download](https://www.rstudio.com/products/rstudio/download)
-3. Launch RStudio and install required packages in the **Console** pane:
+   1. Install R from CRAN:
+      [https://cran.r-project.org](https://cran.r-project.org)
+   2. Install RStudio Desktop:
+      [https://www.rstudio.com/products/rstudio/download](https://www.rstudio.com/products/rstudio/download)
+   3. Launch RStudio and install required packages in the **Console** pane:
 
-   ```r
-   install.packages(c("terra", "future"))
-   # For lidR:
-   install.packages("lidR")
-   ```
+      ```r
+      install.packages(c("terra", "future"))
+      # For lidR:
+      install.packages("lidR")
+      ```
 
----
-
-## 9. Running R Scripts
+## 7. Running R Scripts
 
 1. In RStudio, open `notebooks/forestry_metrics.R`.
 2. Ensure the working directory matches the repository root (Session -> Set Working Directory).
 3. Run the script (Source button or `Ctrl+Shift+Enter`).
 
----
-
-## 10. Verifying the Setup
+## 8. Verifying the Setup
 
 1. Run a small example in JupyterLab:
 
@@ -148,15 +129,15 @@ R scripts require R 4.0+ and RStudio for interactive editing.
 
 2. In RStudio, run the first few lines of `forestry_metrics.R` to confirm packages load without errors.
 
----
 
 ## 11. Troubleshooting Tips
 
-* “Command not found”: confirm that the Conda environment is active (`conda activate lidar_env`).
-* “Module not found”: install missing Python packages via Conda or pip.
-* “PDAL library error”: ensure system‑level PDAL is installed (see [https://pdal.io](https://pdal.io)).
+* "Command not found": confirm that the Conda environment is active (`conda activate lidar_env`).
+* "Module not found": install missing Python packages via Conda or pip.
+* "PDAL library error": ensure system-level PDAL is installed (see [https://pdal.io](https://pdal.io)).
 * R package failures: run `install.packages()` again and verify internet access.
 
----
-
 With this setup, all notebooks and scripts will run in a consistent environment. Adjust paths in the first cell of each notebook to match local directories as needed.
+  
+
+> This work is part of the OpenForest4D project and is supported by funding from the National Science Foundation through awards 2409885, 2409886, and 2409887.

@@ -19,12 +19,12 @@ Standardizing each step in Jupyter notebooks and R scripts makes the workflow re
 
 ![Figure 1](figures/AGU.png)
 
-**Example Output: Canopy Height Change Analysis on the Kaibab National Forest, northern Arizona (2012–2019)**
+**Example Output: Canopy Height Change Analysis on the Kaibab National Forest, northern Arizona (2012-2019)**
 
 The figure above shows changes in the canopy height model along the Kaibab National Forest in northern Arizona, generated with our multi-temporal lidar processing workflow. The workflow was applied to airborne lidar data collected in 2012 and 2019.
 
 * **Main Map (left):** Displays canopy height model change between 2012 and 2019.
-* 
+ 
   * **Blue areas** indicate gain in canopy height.
   * **Whites areas** indicate no change in canopy height.
   * **Red areas** indicate loss in canopy height.
@@ -38,12 +38,9 @@ The figure above shows changes in the canopy height model along the Kaibab Natio
 
 This figure illustrates the complete processing workflow, starting with raw point cloud tiling and classification, followed by raster generation, projection to a common coordinate system, differencing, and culminating in the final visualization used for ecological change analysis.
 
-
-
 ## 1. Repository Structure
 
 ```
-
 project-root/
   data/
     usgs_3dep_boundaries.geojson
@@ -68,12 +65,9 @@ project-root/
   README.md
 ```
 
-
 ## 2. Installation & Quick Start
 
 Refer to [instructions/Setup_Instructions.md](instructions/Setup_Instructions.md) for platform-specific setup steps.
-
-
 
 ## 3. Workflow Summary
 
@@ -115,7 +109,6 @@ If point clouds are not yet tiled (likely to be the case):
 * **Notebook:** Use  `notebooks/differencing_script.ipynb` to compare and export difference rasters (e.g., Canopy Height Change).
 * **Output:** (CHM) `CHM_Difference.tif` for each tile.  
 
-
 ## 4. Visualization Outputs & Interpretation
 
 This section shows raster visualizations exported from QGIS that illustrate forest metrics and temporal changes from multi-temporal lidar datasets. All outputs are generated sequentially by running the provided scripts. Shaded relief maps (hillshades) are included to improve visual contrast and spatial interpretation.
@@ -123,7 +116,6 @@ This section shows raster visualizations exported from QGIS that illustrate fore
 ### **4.1 Forest Metric Visualizations**
 
 Figures 1, 2, 3, 4, and 5 represent the metrics calculated for the Kaibab National Forest of Northern Arizona using lidar collected in 2019.
-
 
 ![Figure 1](figures/chm_hillshade.png)
 
@@ -147,14 +139,12 @@ Data citation: U.S. Geological Survey (2020).
 
 Data citation: U.S. Geological Survey (2020).
 
-
 ![Figure 5](figures/canopy_cover.png)
 #### Figure 5. Canopy Cover Hillshade
 
 *Image showing canopy cover percentage of first-return points above 1 meter calculated at 10 meter resolution. Calculated as the ratio of points above 1m relative to the total first returns.*
 
 Data citation: U.S. Geological Survey (2020).
-
 
 ![Figure 6](figures/density.png)
 #### Figure 6. Density >2m Hillshade — 2018
@@ -163,11 +153,9 @@ Data citation: U.S. Geological Survey (2020).
 
 Data citation: U.S. Geological Survey (2020).
 
-
 ### 4.2 Differencing and VRT Visualizations
 
 The below image represents the pixel-wise difference in canopy height between the years 2019 and 2021 of the Castle fires in the Kaibab Plateau of Northern Arizona. These plots are made using the differencing_script.ipynb notebook and visualized in QGIS.
-
 
 ![Figure 7](figures/chm_diff.png)
 #### Figure 7. CHM Difference Raster
@@ -182,13 +170,11 @@ Data citation: U.S. Geological Survey (2020). OpenTopography (2012): Mapping the
 *Positive values (green) represent increased surface elevation, often due to vegetation recovery or debris accumulation. Zero (white) indicates no change, while negative values (red) suggest loss of surface features like canopy due to wildfire damage in this case.*
 Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
-
 ![Figure 9](figures/dtm_diff.png)
 #### Figure 9: DTM Difference Raster
 
 *Positive values (green) represent elevation gain in the bare-earth surface, potentially due to sediment deposition or ground movement. Zero (white) indicates stability, and negative values (red) reflect erosion or surface material loss, such as landslides.*
 Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
-
 
 ![Figure 10](figures/rumple_diff.png)
 #### Figure 10: Rumple Index Difference Raster
@@ -196,12 +182,10 @@ Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 *Positive values (green) indicate increased surface roughness and structural complexity, suggesting heterogeneous regrowth or debris presence. Zero (white) shows no change, while negative values (red) represent smoother surfaces caused by canopy or structure loss after wildfire.*
 Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
-
 ![Figure 11](figures/canopy_cover_diff.png)
 #### Figure 11: Canopy Cover Difference Raster
 *Positive values (green) represent increased canopy cover, indicating vegetation regrowth. Zero (white) indicates no change, while negative values (red) show a reduction in canopy density.*
 Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
-
 
 ![Figure 12](figures/density_diff.png)
 #### Figure 12: Density >2m Difference Raster
@@ -209,19 +193,16 @@ Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 *Positive values (green) reflect an increase in lidar returns above 2 meters, suggesting canopy recovery. Zero (white) indicates unchanged vertical structure, and negative values (red) reflect thinning or removal of tall vegetation due to wildfire.*
 Data citation: U.S. Geological Survey (2020), OpenTopography (2012)
 
-
 ### Notes:
 
 * VRT mosaics are saved in the parent folder of each metric group for both original and differenced rasters.
 * These outputs can be further analyzed in QGIS.
 
-
-## 5. Project Importance and Applications
+## 5. Statement of Need
 
 * Supports large-scale, multi-temporal analysis by automating point-cloud processing.
-* Delivers open-source, reproducible workflows for the research community (OpenForest4D).
+* Delivers open-source, reproducible workflows for the research community.
 * Enables quantitative monitoring of forest changes following wildfires and other disturbances.
-
 
 ## 6. License & Citation
 
@@ -240,12 +221,10 @@ To cite this work, use the provided [CITATION.cff](CITATION.cff) or:
 
 ```
 
-
 ## 7. References & Further Reading
 
-* USGS 3DEP EPT service: [https://registry.opendata.aws/usgs-lidar/](https://registry.opendata.aws/usgs-lidar/)
+* USGS 3DEP EPT service: [https://registry.opendata.aws/usgs-lidar/](https://registry.opendata.aws/usgs-lidar/)
 * OpenTopography: [www.opentopography.org](https://opentopography.org)
 * PDAL documentation: [pdal.io](https://pdal.io)
 * lidR R package: [cran.r-project.org/web/packages/lidR/](https://cran.r-project.org/web/packages/lidR/index.html)
 * UTM coordinate system overview: [epsg.io/32610](https://epsg.io/32610)
-
