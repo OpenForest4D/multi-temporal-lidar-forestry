@@ -10,7 +10,7 @@ This repository contains reproducible workflows for retrieving, processing, and 
 The workflow supports:
 
 - Data retrieval from the USGS 3D Elevation Project and OpenTopography
-- Lidar point cloud reprojection and tiling  
+- Lidar point cloud coordinate reference system reprojection and tiling  
 - Grid/raster-based forest metrics calculation (e.g., canopy height model, rumple index)  
 - Temporal differencing of DSM's, DTM's, canopy height models, canopy cover and rumple over time
 - Topographic hillshades and change visualizations via QGIS  
