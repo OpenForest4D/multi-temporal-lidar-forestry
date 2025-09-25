@@ -13,7 +13,7 @@ The workflow supports:
 - Lidar point cloud reprojection and tiling  
 - Grid/raster-based forest metrics calculation (e.g., canopy height model, rumple index)  
 - Temporal differencing of DSM's, DTM's, canopy height models, canopy cover and rumple over time
-- Topographic hillshades and change visulizations via QGIS  
+- Topographic hillshades and change visualizations via QGIS  
 
 Standardizing each step in Jupyter notebooks and R scripts makes the workflow reproducible, scalable, and easily adaptable for applying these calculations to new regions using both modern and legacy lidar datasets.
 
