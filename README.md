@@ -4,16 +4,19 @@
 
 # Multi-Temporal Lidar Workflow for Forest Change Mapping
 
-This repository contains reproducible workflows for retrieving, processing, and analyzing multi-temporal lidar data to detect changes in forest canopies, with example applications in wildfire-affected forests. This project is supported by NSF funded OpenForest4D project and developed at Arizona State University.
+Regional-scale maps of forest characteristics—such as canopy height, canopy cover, and their changes over time—are essential for assessing wildfire impacts on landscapes, ecosystems, and potential cascading hazards like debris flows. Yet, producing these metrics is challenging, requiring advanced geospatial skills to reconcile datasets with varying characteristics (e.g., coordinate reference systems, point cloud densities), substantial computing power, and multiple software packages in different programming languages. To address these barriers, we developed a workflow that generates multiple lidar-derived forest metrics and their temporal changes, streamlining the process and making the analysis more accessible.  
+
+This repository contains R and Jupyter workflows for retrieving, processing, and analyzing multi-temporal large lidar datasets to measure forest characteristics and detect changes over time. The workflow produces digital terrain models (DTMs), digital surface models (DSMs), canopy height models (CHMs), canopy cover, point cloud density above 2-m and rumple index. Each step is standardized in Jupyter notebooks and R scripts to ensure the workflow is reproducible, scalable, and easily adaptable for applying these calculations to new regions using both modern and legacy lidar datasets.
+
+
 - Authors:  Sreeja Krishnamari (Primary Author), Chelsea Scott (Co-Author)
 
 The workflow supports:
-
 - Data retrieval from the USGS 3D Elevation Project and OpenTopography
-- Lidar point cloud coordinate reference system reprojection and tiling  
-- Grid/raster-based forest metrics calculation (e.g., canopy height model, rumple index)  
-- Temporal differencing of DSM's, DTM's, canopy height models, canopy cover and rumple over time
-- Topographic hillshades and change visualizations via QGIS  
+- Lidar point cloud coordinate reference system projection and tiling
+- Grid/raster-based forest metrics calculation of digital terrain models (DTMs), digital surface models (DSMs), canopy height models (CHMs), canopy cover, point cloud density above 2-m and rumple index) using lidR (Roussel et al., 2020)
+- Differencing of the multi-temporal grid/raster-based forest metrics to measure changes to forest geometry over time using
+- Topographic hillshades and change visualizations via QGIS
 
 Standardizing each step in Jupyter notebooks and R scripts makes the workflow reproducible, scalable, and easily adaptable for applying these calculations to new regions using both modern and legacy lidar datasets.
 
