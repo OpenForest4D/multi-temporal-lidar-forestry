@@ -176,8 +176,8 @@ process_chm_pipeline <- function(base_dir, output_dir, year,
       dsm_file  <- file.path(dirs$DSM_tiles, paste0(tile_name, "_", year, "_dsm.tif"))
       chm_file  <- file.path(dirs$CHM_normalized_tiles, paste0(tile_name, "_", year, "_chm.tif"))
       rumple_file <- file.path(dirs$Rumple_tiles, paste0(tile_name, "_", year, "_rumple.tif"))
-      cc_file     <- file.path(dirs$CanopyCover_tiles, paste0(tile_name, "_", year, "_canopycover.tif"))
-      d2_file     <- file.path(dirs$Density_Tiles, paste0(tile_name, "_", year, "_densitygt2m.tif"))
+      cc_file     <- file.path(dirs$CanopyCover_tiles, paste0(tile_name, "_", year, "_canopy_cover.tif"))
+      d2_file     <- file.path(dirs$Density_Tiles, paste0(tile_name, "_", year, "_density.tif"))
       
       message("[START] tile: ", tile_name)
       
