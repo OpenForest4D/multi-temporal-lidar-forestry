@@ -18,8 +18,6 @@ The workflow supports:
 - Differencing of the multi-temporal grid/raster-based forest metrics to measure changes to forest geometry over time using
 - Topographic hillshades and change visualizations via QGIS
 
-Standardizing each step in Jupyter notebooks and R scripts makes the workflow reproducible, scalable, and easily adaptable for applying these calculations to new regions using both modern and legacy lidar datasets.
-
 ![Figure 1](figures/AGU.png)
 
 **Example Output: Canopy Height Change Analysis on the Kaibab National Forest, northern Arizona (2012-2019)**
