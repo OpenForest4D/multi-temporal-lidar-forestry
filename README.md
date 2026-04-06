@@ -2,6 +2,8 @@
 [![NSF-2409885](https://img.shields.io/badge/NSF-2409885-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2409885)
 [![NSF-2409886](https://img.shields.io/badge/NSF-2409886-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=2409886)
 
+[![GitHub downloads](https://img.shields.io/github/downloads/OpenForest4D/multi-temporal-lidar-forestry/total)](https://github.com/OpenForest4D/multi-temporal-lidar-forestry/releases)
+
 # Multi-Temporal Lidar Workflow for Forest Change Mapping
 
 Regional-scale maps of forest characteristics—such as canopy height, canopy cover, and their changes over time—are essential for assessing wildfire impacts on landscapes, ecosystems, and potential cascading hazards like debris flows. Yet, producing these metrics is challenging, requiring advanced geospatial skills to reconcile datasets with varying characteristics (e.g., coordinate reference systems, point cloud densities), substantial computing power, and multiple software packages in different programming languages. To address these barriers, we developed a workflow that generates multiple lidar-derived forest metrics and their temporal changes, streamlining the process and making the analysis more accessible.  
